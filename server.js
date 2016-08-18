@@ -2,19 +2,19 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var apiRouter = require('./routers/apiRouter.js');
+// var apiRouter = require('./routers/apiRouter.js');
 var appRouter = require('./routers/appRouter.js');
 var mongoose = require('mongoose');
 var path = require('path');
 
-mongoose.connect('mongodb://localhost:27017/bookingApp');
+// mongoose.connect('mongodb://localhost:1000/bookingApp');
 
 
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-app.use('/api',apiRouter);
+// app.use('/api',apiRouter);
 app.use('/',appRouter);
 
 
