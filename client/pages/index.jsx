@@ -8,11 +8,10 @@ var Index = React.createClass({
             <div>
                 <NavBar/>
                 <div className="container">
-                    <h1 className="title">HOME PAGE</h1>
                     <div className="hero-body">
                         <div className="container has-text-centered">
                             <h1 className="title">
-                                Title
+                                Home Page
                             </h1>
                             <h2 className="subtitle">
                                 Subtitle

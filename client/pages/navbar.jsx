@@ -10,7 +10,7 @@ var NavBar = React.createClass({
                     <div className="nav-left">
                         <Link to="/" className="nav-item is-tab">Home</Link>
                         <Link to="/rooms/" className="nav-item is-tab">Book Room</Link>
-                        <Link to="/addRoom/" className="nav-item is-tab">Add Room</Link>
+                        <Link to="/addRoom/" className="nav-item is-tab">Add Floor</Link>
                         <Link to="/" className="nav-item is-tab">Delete Room</Link>
 
 
