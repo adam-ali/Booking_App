@@ -9866,7 +9866,7 @@
 	                    { className: 'container' },
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'nav-left' },
+	                        { className: 'nav-center' },
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
 	                            { to: '/', className: 'nav-item is-tab' },
@@ -9914,10 +9914,52 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var Building1 = [{
+	    "name": "A1",
+	    "capacity": "5"
+
+	}, {
+	    "name": "A1",
+	    "capacity": "5"
+
+	}, {
+	    "name": "A1",
+	    "capacity": "5"
+
+	}, {
+	    "name": "A1",
+	    "capacity": "5"
+
+	}, {
+	    "name": "A2",
+	    "capacity": "7"
+	}];
+
 	var Room = _react2.default.createClass({
 	    displayName: 'Room',
 
+	    getInitialState: function getInitialState() {
+	        return {
+	            selected: 'no'
+	        };
+	    },
+	    selectSeat: function selectSeat(e) {
+	        if (this.state.selected === 'no') {
+	            this.setState({
+	                selected: 'yes'
+	            });
+	            console.log(e.target);
+	        } else {
+	            this.setState({
+	                selected: 'no'
+	            });
+	            console.log(e.target);
+	        }
+	    },
+
 	    render: function render() {
+	        var _this = this;
+
 	        return _react2.default.createElement(
 	            'div',
 	            null,
@@ -9927,7 +9969,7 @@
 	                { className: 'container' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'hero-body' },
+	                    { className: 'hero-body ' },
 	                    _react2.default.createElement(
 	                        'div',
 	                        { className: 'container has-text-centered' },
@@ -9946,7 +9988,7 @@
 	                            { className: 'tile is-parent' },
 	                            _react2.default.createElement(
 	                                'article',
-	                                { className: 'tile is-child notification is-dark' },
+	                                { className: 'tile is-child notification is-primary' },
 	                                _react2.default.createElement(
 	                                    'div',
 	                                    { className: 'control is-grouped' },
@@ -9958,7 +10000,20 @@
 	                                            { className: 'label form' },
 	                                            'Floor'
 	                                        ),
-	                                        _react2.default.createElement('input', { className: 'input', type: 'number', placeholder: 'Floor' })
+	                                        _react2.default.createElement(
+	                                            'select',
+	                                            { name: 'cars', className: 'input' },
+	                                            _react2.default.createElement(
+	                                                'option',
+	                                                { value: 'Select' },
+	                                                '0'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'option',
+	                                                { value: '1' },
+	                                                '1'
+	                                            )
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'p',
@@ -9996,14 +10051,56 @@
 	                                    { className: 'columns' },
 	                                    _react2.default.createElement(
 	                                        'div',
-	                                        { className: 'column is-three-quarters' },
+	                                        { className: 'column is-three-quarters is-primary' },
 	                                        _react2.default.createElement(
-	                                            'figure',
-	                                            { className: 'image is-4by3' },
-	                                            _react2.default.createElement('img', { src: 'http://placehold.it/640x480' })
+	                                            'div',
+	                                            { className: 'box rooms' },
+	                                            _react2.default.createElement(
+	                                                'label',
+	                                                { className: 'label has-text-left' },
+	                                                'Rooms'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'div',
+	                                                { className: 'columns' },
+	                                                Building1.map(function (floor, index) {
+	                                                    return _react2.default.createElement(
+	                                                        'div',
+	                                                        { className: '  column is-3 ', onClick: _this.selectSeat, key: index },
+	                                                        _react2.default.createElement(
+	                                                            'cell',
+	                                                            { className: "hvr-bounce-in room " + _this.state.selected, data: "A" + index, key: index },
+	                                                            "A" + index
+	                                                        )
+	                                                    );
+	                                                })
+	                                            )
 	                                        )
 	                                    ),
-	                                    _react2.default.createElement('div', { className: 'column' })
+	                                    _react2.default.createElement(
+	                                        'div',
+	                                        { className: 'column' },
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'subtitle ' },
+	                                            'Floor:'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'subtitle has-text-left' },
+	                                            'Date:'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'subtitle has-text-left' },
+	                                            'Time:'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'subtitle has-text-left' },
+	                                            'Room:'
+	                                        )
+	                                    )
 	                                )
 	                            )
 	                        )

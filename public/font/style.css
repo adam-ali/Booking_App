@@ -1,0 +1,21 @@
+.room{
+    height: 60px;
+    width: 60px;
+    float: left;
+    border-radius: 10px;
+    background-color: deepskyblue;
+    color: whitesmoke;
+    text-align: center;
+    font-family: sans-serif;
+    line-height:50px;
+
+}
+.rooms{
+    min-height: 500px;
+}
+.yes{
+    background-color: darkgrey;
+}
+.no{
+    background-color: cornflowerblue;
+}

@@ -7,7 +7,7 @@ var NavBar = React.createClass({
             <div>
             <nav className="nav has-shadow">
                 <div className="container">
-                    <div className="nav-left">
+                    <div className="nav-center">
                         <Link to="/" className="nav-item is-tab">Home</Link>
                         <Link to="/rooms/" className="nav-item is-tab">Book Room</Link>
                         <Link to="/addRoom/" className="nav-item is-tab">Add Floor</Link>
