@@ -1,21 +1,30 @@
 .room{
     height: 60px;
-    width: 60px;
-    float: left;
+    width: 70px;
+
     border-radius: 10px;
-    background-color: deepskyblue;
+    background-color: #0F9E5E;
     color: whitesmoke;
     text-align: center;
     font-family: sans-serif;
-    line-height:50px;
+    line-height:60px;
+
+}
+.roomsCol{
+    padding-bottom: 20px;
 
 }
 .rooms{
     min-height: 500px;
 }
-.yes{
-    background-color: darkgrey;
+.label{
+    font-size: 20px
 }
-.no{
-    background-color: cornflowerblue;
-}
+
+
+/*.yes{*/
+    /*background-color: darkgrey;*/
+/*}*/
+/*.no{*/
+    /*background-color: cornflowerblue;*/
+/*}*/
