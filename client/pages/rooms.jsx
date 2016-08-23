@@ -1,7 +1,6 @@
 import React from 'react'
 import { Router, Route, Link, hashHistory } from 'react-router'
 import NavBar from './navbar'
-
 var moment = require('moment');
 moment().format();
 
@@ -30,6 +29,7 @@ $(document).ready(function(){
     });
 });
 
+var x =$("#selectedFrom").timepicker('getTime');
 var Building1 =
     [
         {
@@ -129,15 +129,20 @@ var Room = React.createClass({
         console.log(e.target.value)
         this.setState({
             date: e.target.value
-        })
+        });
         document.getElementById('showDate').innerHTML = 'Date: '+document.getElementById('selectedDate').value;
 
     },
     enterFloor:function (e) {
         this.setState({
             floor: e.target.value
-        })
+        });
         document.getElementById('showFloor').innerHTML = 'Floor: '+$( "#selectedFloor option:selected" ).text();
+
+    },
+    enterFrom:function (e) {
+        console.log(e.target.value);
+        document.getElementById('showTime').innerHTML = 'Timee: '+document.getElementById('selectedFrom').value + ' - '
 
     },
     selectSeat:function (e) {
@@ -154,7 +159,6 @@ var Room = React.createClass({
             console.log(e.target.value,this.state.selected);
         }
 
-        document.getElementById('showTime').innerHTML = 'Time: '+document.getElementById('selectedFrom').value + ' - '+document.getElementById('selectedTo').value
         document.getElementById('showRoom').innerHTML = 'Room: ' +e.target.value;
 
 
@@ -165,9 +169,7 @@ var Room = React.createClass({
         return (
             <div>
                 <NavBar/>
-                {
-                    console.log(this.state)
-                }
+
                 <div className="container">
                     <div className="hero-body ">
                         <div className="container has-text-centered">
@@ -189,7 +191,7 @@ var Room = React.createClass({
                                             <label className="label form">Floor</label>
                                             <select  className="input" onChange={this.enterFloor} id="selectedFloor">
                                                 <option></option>
-                                                <option value="0">0</option>
+                                                <option value="G">G</option>
                                                 <option value="1">1</option>
                                             </select>
                                         </div>
@@ -201,7 +203,7 @@ var Room = React.createClass({
 
                                         <div className="col-md-2">
                                             <label className="label">From</label>
-                                            <input className="input selectedFrom"  id="selectedFrom"  />
+                                            <input className="input selectedFrom" onSelect={this.enterFrom} id="selectedFrom"  />
 
                                         </div>
                                         <div className="col-md-2">
