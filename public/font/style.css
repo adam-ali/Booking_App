@@ -3,8 +3,8 @@
     width: 70px;
 
     border-radius: 10px;
-    background-color: #3498DB;
-    color: whitesmoke;
+    background-color: #EBECEE;
+    color: black;
     text-align: center;
     font-family: sans-serif;
     line-height:60px;
@@ -12,13 +12,20 @@
 }
 .roomsCol{
     padding-bottom: 20px;
-
+    padding-right: 5px;
 }
 .rooms{
     min-height: 500px;
 }
 .label{
     font-size: 20px
+}
+.bookingBox{
+    min-width: 650px;
+    background-color: #EBECEE;
+}
+.subtitle{
+    color: black;
 }
 
 
