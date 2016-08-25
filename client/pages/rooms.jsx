@@ -1,12 +1,28 @@
 import React from 'react'
 import { Router, Route, Link, hashHistory } from 'react-router'
 import NavBar from './navbar'
-import {Button, Card, Row, Col,Input} from 'react-materialize';
+import {Button, Card, Row, Col,Input,Icon} from 'react-materialize';
 var moment = require('moment');
 moment().format();
 
 $(document).ready(function(){
     $('select').material_select();
+    $('.datepicker').pickadate({
+        format: 'yyyy-mm-dd',
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year
+        min: moment().format("YYYY-MM-DD"),
+        electYears: 3,
+        max:+30,
+        disable: [1, 7],
+        closeOnSelect: true,
+        closeOnClear: true,
+        onSet: function() {
+            document.getElementById('showDate').innerHTML = 'Date: '+document.getElementById('selectedDate').value;
+        }
+
+    });
+
     $('input#selectedFrom').timepicker({
         timeFormat: 'h:mm p',
         interval: 30,
@@ -112,10 +128,6 @@ var Building1 =
     ]
 
 var Room = React.createClass({
-    componentDidMount() {
-        // Use Materialize custom select input
-        $(this.refs.yourSelectTag).material_select(this._handleSelectChange.bind(this));
-    },
     getInitialState:function(){
         return {
             selected: 'no',
@@ -138,11 +150,10 @@ var Room = React.createClass({
 
     },
     enterFloor:function (e) {
-        console.log(e.target);
         this.setState({
             floor: e.target.value
         });
-        document.getElementById('showFloor').innerHTML = 'Flooor: '+$( "#selectedFloor option:selected" ).text();
+        document.getElementById('showFloor').innerHTML = 'Floor: '+$( "#selectedFloor option:selected" ).text();
 
     },
     selectSeat:function (e) {
@@ -172,7 +183,7 @@ var Room = React.createClass({
                 <NavBar/>
 
 
-
+                <section className="hero is-fullheight">
                         <div className="container has-text-centered">
                             <h1 className="title">
                                 Book a Room
@@ -184,47 +195,36 @@ var Room = React.createClass({
                                 <article className="tile is-child notification bookingBox">
 
                                     <div className="row">
-                                        <div className="col-md-3">
+                                        <div className="col s3">
                                             <div className="input-field ">
                                                 <label htmlFor="selectedName">Name</label>
                                                 <input id="selectedName" onChange={this.enterName} type="text" className="validate" />
                                             </div>
                                         </div>
-                                        <div className="col-md-2">
+                                        <div className="col s2">
 
-                                            <Row>
-                                                <Input s={12} type='select' onChange={this.enterFloor} id="selectedFloor" label="Materialize Select">
-                                                    <option value='1'>Option 1</option>
-                                                    <option value='2'>Option 2</option>
-                                                    <option value='3'>Option 3</option>
-                                                </Input>
-                                            </Row>
+                                            <Input s={12} type='select' onChange={this.enterFloor} id="selectedFloor" label="Select Floor">
+                                                <option value="" disabled>choose floor</option>
+                                                <option value='G'>G</option>
+                                                <option value='1'>1</option>
+                                            </Input>
 
-                                            <div className="input-field">
-                                                <select className="" onChange={this.enterFloor} id="selectedFloor">
-                                                    <option value="" disabled>Select floor</option>
-                                                    <option value="G">G</option>
-                                                    <option value="1">1</option>
-                                                </select>
-                                                <label >Floor</label>
-
-                                            </div>
 
                                         </div>
-                                        <div className="col-md-3">
-                                            <label className="label">Date</label>
-                                            <input className="input " id="selectedDate" onChange={this.enterDate} min={moment().format("YYYY-MM-DD")} type="date" placeholder="Date" />
+                                        <div className="col s3">
+                                            <label >Date</label>
+                                            <input className="datepicker" id="selectedDate" onChange={this.enterDate} min={moment().format("YYYY-MM-DD")} type="date" placeholder="Enter date of booking" />
 
                                         </div>
-
-                                        <div className="col-md-2">
-                                            <label className="label">From</label>
+                                        <div className="col s2">
+                                            <label >From</label>
 
                                             <input className="input selectedFrom" id="selectedFrom"  />
 
                                         </div>
-                                        <div className="col-md-2">
-                                            <label className="label">To</label>
+                                        <div className="col s2">
+
+                                            <label>To</label>
                                             <input className="input selectedTo"  id="selectedTo"  />
                                         </div>
                                     </div>
@@ -261,16 +261,17 @@ var Room = React.createClass({
                                             <p className="subtitle has-text-left" id="showTime">Time:</p>
                                             <p className="subtitle has-text-left" id="showRoom">Room:</p>
 
-                                            <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                                            <button className="btn waves-effect waves-light" >Submit
                                                 <i className="material-icons right">send</i>
                                             </button>
+
                                         </div>
                                     </div>
 
                                 </article>
                             </div>
                         </div>
-
+            </section>
 
             </div>
         )
