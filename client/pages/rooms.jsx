@@ -15,14 +15,14 @@ $(document).ready(function(){
         electYears: 3,
         max:+30,
         disable: [1, 7],
-        closeOnSelect: true,
-        closeOnClear: true,
         onSet: function() {
-            document.getElementById('showDate').innerHTML = 'Date: '+document.getElementById('selectedDate').value;
+            document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
+        },
+        onClose: function(){
+            $(document.activeElement).blur()
         }
 
     });
-
     $('input#selectedFrom').timepicker({
         timeFormat: 'h:mm p',
         interval: 30,
@@ -136,7 +136,7 @@ var Room = React.createClass({
         }
     },
     enterName:function (e) {
-        document.getElementById('showName').innerHTML = 'Name: '+ $("#selectedName").val()
+        document.getElementById('showName').innerHTML = $("#selectedName").val()
 
         this.setState({
             name: e.target.value
@@ -146,14 +146,14 @@ var Room = React.createClass({
         this.setState({
             date: e.target.value
         });
-        document.getElementById('showDate').innerHTML = 'Date: '+document.getElementById('selectedDate').value;
+        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
 
     },
     enterFloor:function (e) {
         this.setState({
             floor: e.target.value
         });
-        document.getElementById('showFloor').innerHTML = 'Floor: '+$( "#selectedFloor option:selected" ).text();
+        document.getElementById('showFloor').innerHTML = $( "#selectedFloor option:selected" ).text();
 
     },
     selectSeat:function (e) {
@@ -169,11 +169,9 @@ var Room = React.createClass({
             })
             console.log(e.target.value,this.state.selected);
         }
-        document.getElementById('showTime').innerHTML = 'Time: '+$('#selectedFrom ').val() + ' - '+ $('#selectedTo').val()
+        document.getElementById('showTime').innerHTML = $('#selectedFrom ').val() + ' - '+ $('#selectedTo').val()
 
-        document.getElementById('showRoom').innerHTML = 'Room: ' +e.target.value;
-
-
+        document.getElementById('showRoom').innerHTML = e.target.value;
 
     },
 
@@ -255,16 +253,49 @@ var Room = React.createClass({
 
                                         </div>
                                         <div className="column">
-                                            <p className="subtitle has-text-left" id="showName">Name:</p>
-                                            <p className="subtitle has-text-left" id="showFloor">Floor:</p>
-                                            <p className="subtitle has-text-left" id="showDate">Date:</p>
-                                            <p className="subtitle has-text-left" id="showTime">Time:</p>
-                                            <p className="subtitle has-text-left" id="showRoom">Room:</p>
-
+                                            <div className="row">
+                                                <div className="col s4">
+                                                    <p className="subtitle has-text-left"><b>Name:</b></p>
+                                                </div>
+                                                <div className="col s8">
+                                                    <p className="subtitle has-text-left" id="showName">{''}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col s4">
+                                                    <p className="subtitle has-text-left"><b>Floor:</b></p>
+                                                </div>
+                                                <div className="col s8">
+                                                    <p className="subtitle has-text-left" id="showFloor">{''}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col s4">
+                                                    <p className="subtitle has-text-left"><b>Date:</b></p>
+                                                </div>
+                                                <div className="col s8">
+                                                    <p className="subtitle has-text-left" id="showDate">{''}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col s4">
+                                                    <p className="subtitle has-text-left"><b>Time:</b></p>
+                                                </div>
+                                                <div className="col s8">
+                                                    <p className="subtitle has-text-left" id="showTime">{''}</p>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col s4">
+                                                    <p className="subtitle has-text-left"><b>Room:</b></p>
+                                                </div>
+                                                <div className="col s8">
+                                                    <p className="subtitle has-text-left" id="showRoom">{''}</p>
+                                                </div>
+                                            </div>
                                             <button className="btn waves-effect waves-light" >Submit
                                                 <i className="material-icons right">send</i>
                                             </button>
-
                                         </div>
                                     </div>
 

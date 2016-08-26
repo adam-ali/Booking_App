@@ -10055,14 +10055,14 @@
 	        electYears: 3,
 	        max: +30,
 	        disable: [1, 7],
-	        closeOnSelect: true,
-	        closeOnClear: true,
 	        onSet: function onSet() {
-	            document.getElementById('showDate').innerHTML = 'Date: ' + document.getElementById('selectedDate').value;
+	            document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
+	        },
+	        onClose: function onClose() {
+	            $(document.activeElement).blur();
 	        }
 
 	    });
-
 	    $('input#selectedFrom').timepicker({
 	        timeFormat: 'h:mm p',
 	        interval: 30,
@@ -10159,7 +10159,7 @@
 	        };
 	    },
 	    enterName: function enterName(e) {
-	        document.getElementById('showName').innerHTML = 'Name: ' + $("#selectedName").val();
+	        document.getElementById('showName').innerHTML = $("#selectedName").val();
 
 	        this.setState({
 	            name: e.target.value
@@ -10169,13 +10169,13 @@
 	        this.setState({
 	            date: e.target.value
 	        });
-	        document.getElementById('showDate').innerHTML = 'Date: ' + document.getElementById('selectedDate').value;
+	        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
 	    },
 	    enterFloor: function enterFloor(e) {
 	        this.setState({
 	            floor: e.target.value
 	        });
-	        document.getElementById('showFloor').innerHTML = 'Floor: ' + $("#selectedFloor option:selected").text();
+	        document.getElementById('showFloor').innerHTML = $("#selectedFloor option:selected").text();
 	    },
 	    selectSeat: function selectSeat(e) {
 	        if (this.state.selected === 'no') {
@@ -10189,9 +10189,9 @@
 	            });
 	            console.log(e.target.value, this.state.selected);
 	        }
-	        document.getElementById('showTime').innerHTML = 'Time: ' + $('#selectedFrom ').val() + ' - ' + $('#selectedTo').val();
+	        document.getElementById('showTime').innerHTML = $('#selectedFrom ').val() + ' - ' + $('#selectedTo').val();
 
-	        document.getElementById('showRoom').innerHTML = 'Room: ' + e.target.value;
+	        document.getElementById('showRoom').innerHTML = e.target.value;
 	    },
 
 	    render: function render() {
@@ -10339,29 +10339,134 @@
 	                                    'div',
 	                                    { className: 'column' },
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'subtitle has-text-left', id: 'showName' },
-	                                        'Name:'
+	                                        'div',
+	                                        { className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s4' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left' },
+	                                                _react2.default.createElement(
+	                                                    'b',
+	                                                    null,
+	                                                    'Name:'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s8' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left', id: 'showName' },
+	                                                ''
+	                                            )
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'subtitle has-text-left', id: 'showFloor' },
-	                                        'Floor:'
+	                                        'div',
+	                                        { className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s4' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left' },
+	                                                _react2.default.createElement(
+	                                                    'b',
+	                                                    null,
+	                                                    'Floor:'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s8' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left', id: 'showFloor' },
+	                                                ''
+	                                            )
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'subtitle has-text-left', id: 'showDate' },
-	                                        'Date:'
+	                                        'div',
+	                                        { className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s4' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left' },
+	                                                _react2.default.createElement(
+	                                                    'b',
+	                                                    null,
+	                                                    'Date:'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s8' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left', id: 'showDate' },
+	                                                ''
+	                                            )
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'subtitle has-text-left', id: 'showTime' },
-	                                        'Time:'
+	                                        'div',
+	                                        { className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s4' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left' },
+	                                                _react2.default.createElement(
+	                                                    'b',
+	                                                    null,
+	                                                    'Time:'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s8' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left', id: 'showTime' },
+	                                                ''
+	                                            )
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'subtitle has-text-left', id: 'showRoom' },
-	                                        'Room:'
+	                                        'div',
+	                                        { className: 'row' },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s4' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left' },
+	                                                _react2.default.createElement(
+	                                                    'b',
+	                                                    null,
+	                                                    'Room:'
+	                                                )
+	                                            )
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'col s8' },
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                { className: 'subtitle has-text-left', id: 'showRoom' },
+	                                                ''
+	                                            )
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'button',
