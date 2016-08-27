@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/public/";
+/******/ 	__webpack_require__.p = "./public/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -10088,66 +10088,51 @@
 	});
 
 	var Building1 = [{
-	    "name": "A1",
-	    "capacity": "5"
+	    floor: 'G',
+	    rooms: [{
+	        "name": "A1",
+	        "capacity": "5"
 
-	}, {
-	    "name": "A2",
-	    "capacity": "5"
+	    }, {
+	        "name": "A5",
+	        "capacity": "5"
 
-	}, {
-	    "name": "A3",
-	    "capacity": "5"
+	    }, {
+	        "name": "NC",
+	        "capacity": "5"
 
-	}, {
-	    "name": "A4",
-	    "capacity": "5"
+	    }, {
+	        "name": "R",
+	        "capacity": "5"
 
-	}, {
-	    "name": "A5",
-	    "capacity": "5"
+	    }, {
+	        "name": "R2",
+	        "capacity": "5"
 
+	    }, {
+	        "name": "00",
+	        "capacity": "7"
+	    }]
 	}, {
-	    "name": "NC",
-	    "capacity": "5"
+	    floor: '1',
+	    rooms: [{
+	        "name": "g1",
+	        "capacity": "5"
 
-	}, {
-	    "name": "R",
-	    "capacity": "5"
+	    }, {
+	        "name": "g2",
+	        "capacity": "5"
 
-	}, {
-	    "name": "A",
-	    "capacity": "5"
+	    }, {
+	        "name": "g3",
+	        "capacity": "5"
 
-	}, {
-	    "name": "CC",
-	    "capacity": "5"
+	    }, {
+	        "name": "g4",
+	        "capacity": "5"
 
-	}, {
-	    "name": "R4",
-	    "capacity": "5"
-
-	}, {
-	    "name": "M6",
-	    "capacity": "5"
-
-	}, {
-	    "name": "M1",
-	    "capacity": "5"
-
-	}, {
-	    "name": "M4",
-	    "capacity": "5"
-
-	}, {
-	    "name": "M9",
-	    "capacity": "5"
-
-	}, {
-	    "name": "00",
-	    "capacity": "7"
+	    }]
 	}];
-
 	var Room = _react2.default.createClass({
 	    displayName: 'Room',
 
@@ -10155,12 +10140,12 @@
 	        return {
 	            selected: 'no',
 	            name: '',
-	            date: ''
+	            date: '',
+	            floor: []
 	        };
 	    },
 	    enterName: function enterName(e) {
 	        document.getElementById('showName').innerHTML = $("#selectedName").val();
-
 	        this.setState({
 	            name: e.target.value
 	        });
@@ -10172,10 +10157,18 @@
 	        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
 	    },
 	    enterFloor: function enterFloor(e) {
-	        this.setState({
-	            floor: e.target.value
-	        });
-	        document.getElementById('showFloor').innerHTML = $("#selectedFloor option:selected").text();
+	        var selectedfloor = $("#selectedFloor option:selected").text();
+
+	        for (var i = 0; i < Building1.length; i++) {
+	            if (Building1[i].floor === selectedfloor) {
+
+	                this.setState({
+	                    floor: Building1[i].rooms
+	                });
+	            }
+	        }
+	        document.getElementById('showRoom').innerHTML = '';
+	        document.getElementById('showFloor').innerHTML = selectedfloor;
 	    },
 	    selectSeat: function selectSeat(e) {
 	        if (this.state.selected === 'no') {
@@ -10193,7 +10186,22 @@
 
 	        document.getElementById('showRoom').innerHTML = e.target.value;
 	    },
+	    submit: function submit() {
+	        var name = $('#showName').text();
+	        var floor = $('#showFloor').text();
+	        var date = $('#showDate').text();
+	        var time = $('#showTime').text();
+	        var room = $('#showRoom').text();
 
+	        var booking = {
+	            name: name,
+	            floor: floor,
+	            date: date,
+	            time: time,
+	            room: room
+	        };
+	        console.log(booking);
+	    },
 	    render: function render() {
 	        var _this = this;
 
@@ -10208,14 +10216,22 @@
 	                    'div',
 	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
-	                        'h1',
-	                        { className: 'title' },
-	                        'Book a Room'
-	                    ),
-	                    _react2.default.createElement(
-	                        'h2',
-	                        { className: 'subtitle' },
-	                        'Select a floor and time'
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'column is-three-quarters' },
+	                            _react2.default.createElement(
+	                                'h1',
+	                                { className: 'title' },
+	                                'Book a Room'
+	                            ),
+	                            _react2.default.createElement(
+	                                'h2',
+	                                { className: 'subtitle' },
+	                                'Select a floor'
+	                            )
+	                        )
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -10251,16 +10267,13 @@
 	                                            { value: '', disabled: true },
 	                                            'choose floor'
 	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            { value: 'G' },
-	                                            'G'
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            'option',
-	                                            { value: '1' },
-	                                            '1'
-	                                        )
+	                                        Building1.map(function (room, index) {
+	                                            return _react2.default.createElement(
+	                                                'option',
+	                                                { value: room.floor, key: index },
+	                                                room.floor
+	                                            );
+	                                        })
 	                                    )
 	                                ),
 	                                _react2.default.createElement(
@@ -10271,7 +10284,7 @@
 	                                        null,
 	                                        'Date'
 	                                    ),
-	                                    _react2.default.createElement('input', { className: 'datepicker', id: 'selectedDate', onChange: this.enterDate, min: moment().format("YYYY-MM-DD"), type: 'date', placeholder: 'Enter date of booking' })
+	                                    _react2.default.createElement('input', { className: 'datepicker', id: 'selectedDate', onChange: this.enterDate, min: moment().format("YYYY-MM-DD"), placeholder: 'Select date' })
 	                                ),
 	                                _react2.default.createElement(
 	                                    'div',
@@ -10321,7 +10334,7 @@
 	                                        _react2.default.createElement(
 	                                            'div',
 	                                            { className: 'row' },
-	                                            Building1.map(function (room, index) {
+	                                            this.state.floor.map(function (room, index) {
 	                                                return _react2.default.createElement(
 	                                                    'div',
 	                                                    { className: 'col-md-2 roomsCol', key: index },
@@ -10470,7 +10483,7 @@
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        'button',
-	                                        { className: 'btn waves-effect waves-light' },
+	                                        { className: 'btn waves-effect waves-light', onClick: this.submit },
 	                                        'Submit',
 	                                        _react2.default.createElement(
 	                                            'i',

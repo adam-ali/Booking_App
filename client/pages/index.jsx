@@ -16,6 +16,7 @@ var Index = React.createClass({
                             <h2 className="subtitle">
                                 Subtitle
                             </h2>
+
                         </div>
                     </div>
                 </div>

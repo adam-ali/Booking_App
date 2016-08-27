@@ -50,94 +50,76 @@ $(document).ready(function(){
 var Building1 =
     [
         {
-            "name":"A1",
-            "capacity":"5",
+            floor:'G',
+            rooms:[
+                {
+                    "name":"A1",
+                    "capacity":"5",
 
+                },
+                {
+                    "name":"A5",
+                    "capacity":"5",
+
+                },
+                {
+                    "name":"NC",
+                    "capacity":"5",
+
+                },
+                {
+                    "name":"R",
+                    "capacity":"5",
+
+                },
+                {
+                    "name":"R2",
+                    "capacity":"5",
+
+                },
+                {
+                    "name":"00",
+                    "capacity":"7"
+                }
+            ]
         },
         {
-            "name":"A2",
-            "capacity":"5",
+            floor:'1',
+            rooms:[
+                {
+                    "name":"g1",
+                    "capacity":"5",
 
-        },
-        {
-            "name":"A3",
-            "capacity":"5",
+                },
+                {
+                    "name":"g2",
+                    "capacity":"5",
 
-        },
-        {
-            "name":"A4",
-            "capacity":"5",
+                },
+                {
+                    "name":"g3",
+                    "capacity":"5",
 
-        },
-        {
-            "name":"A5",
-            "capacity":"5",
+                },
+                {
+                    "name":"g4",
+                    "capacity":"5",
 
-        },
-
-        {
-            "name":"NC",
-            "capacity":"5",
-
-        },
-        {
-            "name":"R",
-            "capacity":"5",
-
-        },
-        {
-            "name":"A",
-            "capacity":"5",
-
-        },
-        {
-            "name":"CC",
-            "capacity":"5",
-
-        },
-
-        {
-            "name":"R4",
-            "capacity":"5",
-
-        },
-        {
-            "name":"M6",
-            "capacity":"5",
-
-        },
-        {
-            "name":"M1",
-            "capacity":"5",
-
-        },
-        {
-            "name":"M4",
-            "capacity":"5",
-
-        },
-        {
-            "name":"M9",
-            "capacity":"5",
-
-        },
-        {
-            "name":"00",
-            "capacity":"7"
+                },
+            ]
         }
-    ]
-
+    ];
 var Room = React.createClass({
     getInitialState:function(){
         return {
             selected: 'no',
             name:'',
-            date:''
+            date:'',
+            floor:[],
         }
     },
     enterName:function (e) {
         document.getElementById('showName').innerHTML = $("#selectedName").val()
-
         this.setState({
             name: e.target.value
         })
@@ -150,10 +132,19 @@ var Room = React.createClass({
 
     },
     enterFloor:function (e) {
-        this.setState({
-            floor: e.target.value
-        });
-        document.getElementById('showFloor').innerHTML = $( "#selectedFloor option:selected" ).text();
+        var selectedfloor =$( "#selectedFloor option:selected" ).text();
+
+
+        for (var i=0;i<Building1.length;i++) {
+            if (Building1[i].floor === selectedfloor) {
+
+                this.setState({
+                    floor: Building1[i].rooms
+                });
+            }
+        }
+        document.getElementById('showRoom').innerHTML = '';
+        document.getElementById('showFloor').innerHTML = selectedfloor
 
     },
     selectSeat:function (e) {
@@ -174,7 +165,22 @@ var Room = React.createClass({
         document.getElementById('showRoom').innerHTML = e.target.value;
 
     },
+    submit: function () {
+        var name =$('#showName').text();
+        var floor =$('#showFloor').text()
+        var date=$('#showDate').text()
+        var time =$('#showTime').text()
+        var room =$('#showRoom').text()
 
+        var booking ={
+            name:name,
+            floor:floor,
+            date:date,
+            time:time,
+            room:room
+        }
+        console.log(booking)
+    },
     render: function () {
         return (
             <div>
@@ -183,12 +189,17 @@ var Room = React.createClass({
 
                 <section className="hero is-fullheight">
                         <div className="container has-text-centered">
-                            <h1 className="title">
-                                Book a Room
-                            </h1>
-                            <h2 className="subtitle">
-                                Select a floor and time
-                            </h2>
+                            <div className="row">
+                                <div className="column is-three-quarters">
+                                    <h1 className="title">
+                                        Book a Room
+                                    </h1>
+                                    <h2 className="subtitle">
+                                        Select a floor
+                                    </h2>
+                                </div>
+                            </div>
+
                             <div className="tile is-parent ">
                                 <article className="tile is-child notification bookingBox">
 
@@ -203,15 +214,19 @@ var Room = React.createClass({
 
                                             <Input s={12} type='select' onChange={this.enterFloor} id="selectedFloor" label="Select Floor">
                                                 <option value="" disabled>choose floor</option>
-                                                <option value='G'>G</option>
-                                                <option value='1'>1</option>
+                                                { Building1.map((room,index) =>{
+                                                    return (
+                                                        <option value={room.floor} key={index} >{room.floor}</option>
+                                                    )
+
+                                                })}
                                             </Input>
 
 
                                         </div>
                                         <div className="col s3">
                                             <label >Date</label>
-                                            <input className="datepicker" id="selectedDate" onChange={this.enterDate} min={moment().format("YYYY-MM-DD")} type="date" placeholder="Enter date of booking" />
+                                            <input className="datepicker" id="selectedDate" onChange={this.enterDate} min={moment().format("YYYY-MM-DD")} placeholder="Select date" />
 
                                         </div>
                                         <div className="col s2">
@@ -236,7 +251,7 @@ var Room = React.createClass({
                                                 <label className="label has-text-left">Rooms</label>
 
                                                 <div className="row" >
-                                                    { Building1.map((room,index) =>{
+                                                    { this.state.floor.map((room,index) =>{
                                                         return (
 
 
@@ -293,7 +308,7 @@ var Room = React.createClass({
                                                     <p className="subtitle has-text-left" id="showRoom">{''}</p>
                                                 </div>
                                             </div>
-                                            <button className="btn waves-effect waves-light" >Submit
+                                            <button className="btn waves-effect waves-light" onClick={this.submit}>Submit
                                                 <i className="material-icons right">send</i>
                                             </button>
                                         </div>
