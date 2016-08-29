@@ -58,27 +58,58 @@ var Building1 =
 
                 },
                 {
+                    "name":"A2",
+                    "capacity":"3",
+
+                },
+                {
+                    "name":"A3",
+                    "capacity":"7",
+
+                },
+                {
+                    "name":"A4",
+                    "capacity":"4",
+
+                },
+                {
                     "name":"A5",
                     "capacity":"5",
 
                 },
                 {
-                    "name":"NC",
+                    "name":"A6",
+                    "capacity":"4",
+
+                },
+                {
+                    "name":"A7",
+                    "capacity":"9",
+
+                },
+                {
+                    "name":"A8",
+                    "capacity":"6",
+
+                },
+                {
+                    "name":"A9",
                     "capacity":"5",
 
                 },
                 {
-                    "name":"R",
-                    "capacity":"5",
+                    "name":"A10",
+                    "capacity":"7",
 
                 },
                 {
-                    "name":"R2",
+                    "name":"A11",
                     "capacity":"5",
 
                 },
+
                 {
-                    "name":"00",
+                    "name":"A12",
                     "capacity":"7"
                 }
             ]
@@ -87,25 +118,80 @@ var Building1 =
             floor:'1',
             rooms:[
                 {
-                    "name":"g1",
+                    "name":"C1",
+                    "capacity":"6",
+
+                },
+                {
+                    "name":"C2",
+                    "capacity":"4",
+
+                },
+                {
+                    "name":"C3",
                     "capacity":"5",
 
                 },
                 {
-                    "name":"g2",
+                    "name":"C4",
                     "capacity":"5",
 
                 },
                 {
-                    "name":"g3",
+                    "name":"C5",
+                    "capacity":"4",
+
+                },
+                {
+                    "name":"C6",
+                    "capacity":"7",
+
+                },
+                {
+                    "name":"C7",
+                    "capacity":"8",
+
+                },
+                {
+                    "name":"C8",
+                    "capacity":"9",
+
+                },
+            ]
+        },
+        {
+            floor:'2',
+            rooms:[
+                {
+                    "name":"Q1",
+                    "capacity":"6",
+
+                },
+                {
+                    "name":"Q2",
+                    "capacity":"4",
+
+                },
+                {
+                    "name":"Q3",
                     "capacity":"5",
 
                 },
                 {
-                    "name":"g4",
+                    "name":"Q4",
                     "capacity":"5",
 
                 },
+                {
+                    "name":"Q5",
+                    "capacity":"4",
+
+                },
+                {
+                    "name":"Q6",
+                    "capacity":"7",
+
+                }
             ]
         }
     ];
@@ -189,16 +275,14 @@ var Room = React.createClass({
 
                 <section className="hero is-fullheight">
                         <div className="container has-text-centered">
-                            <div className="row">
-                                <div className="column is-three-quarters">
+
                                     <h1 className="title">
                                         Book a Room
                                     </h1>
                                     <h2 className="subtitle">
                                         Select a floor
                                     </h2>
-                                </div>
-                            </div>
+
 
                             <div className="tile is-parent ">
                                 <article className="tile is-child notification bookingBox">
@@ -241,9 +325,12 @@ var Room = React.createClass({
                                             <input className="input selectedTo"  id="selectedTo"  />
                                         </div>
                                     </div>
-
-                                    <p className="title">Select a Room</p>
-                                    <p className="subtitle">You can only book one room at a time</p>
+                                    <div className="row">
+                                        <div className="column is-three-quarters">
+                                            <p className="title">Select a Room</p>
+                                            <p className="subtitle">You can only book one room at a time</p>
+                                        </div>
+                                    </div>
                                     <div className="columns">
                                         <div className="column is-three-quarters is-primary">
 
@@ -255,7 +342,7 @@ var Room = React.createClass({
                                                         return (
 
 
-                                                            <div className="col-md-2 roomsCol"  key={index}>
+                                                            <div className="col-md-3 roomsCol"  key={index}>
                                                                 <button className={"hvr-bounce-in room "  +this.state.selected} onClick={this.selectSeat} value={room.name} key={index}>{room.name}</button>
                                                             </div>
 

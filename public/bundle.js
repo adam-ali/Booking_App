@@ -10094,42 +10094,109 @@
 	        "capacity": "5"
 
 	    }, {
+	        "name": "A2",
+	        "capacity": "3"
+
+	    }, {
+	        "name": "A3",
+	        "capacity": "7"
+
+	    }, {
+	        "name": "A4",
+	        "capacity": "4"
+
+	    }, {
 	        "name": "A5",
 	        "capacity": "5"
 
 	    }, {
-	        "name": "NC",
+	        "name": "A6",
+	        "capacity": "4"
+
+	    }, {
+	        "name": "A7",
+	        "capacity": "9"
+
+	    }, {
+	        "name": "A8",
+	        "capacity": "6"
+
+	    }, {
+	        "name": "A9",
 	        "capacity": "5"
 
 	    }, {
-	        "name": "R",
+	        "name": "A10",
+	        "capacity": "7"
+
+	    }, {
+	        "name": "A11",
 	        "capacity": "5"
 
 	    }, {
-	        "name": "R2",
-	        "capacity": "5"
-
-	    }, {
-	        "name": "00",
+	        "name": "A12",
 	        "capacity": "7"
 	    }]
 	}, {
 	    floor: '1',
 	    rooms: [{
-	        "name": "g1",
+	        "name": "C1",
+	        "capacity": "6"
+
+	    }, {
+	        "name": "C2",
+	        "capacity": "4"
+
+	    }, {
+	        "name": "C3",
 	        "capacity": "5"
 
 	    }, {
-	        "name": "g2",
+	        "name": "C4",
 	        "capacity": "5"
 
 	    }, {
-	        "name": "g3",
+	        "name": "C5",
+	        "capacity": "4"
+
+	    }, {
+	        "name": "C6",
+	        "capacity": "7"
+
+	    }, {
+	        "name": "C7",
+	        "capacity": "8"
+
+	    }, {
+	        "name": "C8",
+	        "capacity": "9"
+
+	    }]
+	}, {
+	    floor: '2',
+	    rooms: [{
+	        "name": "Q1",
+	        "capacity": "6"
+
+	    }, {
+	        "name": "Q2",
+	        "capacity": "4"
+
+	    }, {
+	        "name": "Q3",
 	        "capacity": "5"
 
 	    }, {
-	        "name": "g4",
+	        "name": "Q4",
 	        "capacity": "5"
+
+	    }, {
+	        "name": "Q5",
+	        "capacity": "4"
+
+	    }, {
+	        "name": "Q6",
+	        "capacity": "7"
 
 	    }]
 	}];
@@ -10216,22 +10283,14 @@
 	                    'div',
 	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'row' },
-	                        _react2.default.createElement(
-	                            'div',
-	                            { className: 'column is-three-quarters' },
-	                            _react2.default.createElement(
-	                                'h1',
-	                                { className: 'title' },
-	                                'Book a Room'
-	                            ),
-	                            _react2.default.createElement(
-	                                'h2',
-	                                { className: 'subtitle' },
-	                                'Select a floor'
-	                            )
-	                        )
+	                        'h1',
+	                        { className: 'title' },
+	                        'Book a Room'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        { className: 'subtitle' },
+	                        'Select a floor'
 	                    ),
 	                    _react2.default.createElement(
 	                        'div',
@@ -10308,14 +10367,22 @@
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'title' },
-	                                'Select a Room'
-	                            ),
-	                            _react2.default.createElement(
-	                                'p',
-	                                { className: 'subtitle' },
-	                                'You can only book one room at a time'
+	                                'div',
+	                                { className: 'row' },
+	                                _react2.default.createElement(
+	                                    'div',
+	                                    { className: 'column is-three-quarters' },
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'title' },
+	                                        'Select a Room'
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        'p',
+	                                        { className: 'subtitle' },
+	                                        'You can only book one room at a time'
+	                                    )
+	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                'div',
@@ -10337,7 +10404,7 @@
 	                                            this.state.floor.map(function (room, index) {
 	                                                return _react2.default.createElement(
 	                                                    'div',
-	                                                    { className: 'col-md-2 roomsCol', key: index },
+	                                                    { className: 'col-md-3 roomsCol', key: index },
 	                                                    _react2.default.createElement(
 	                                                        'button',
 	                                                        { className: "hvr-bounce-in room " + _this.state.selected, onClick: _this.selectSeat, value: room.name, key: index },
