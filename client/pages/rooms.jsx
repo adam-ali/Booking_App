@@ -1,5 +1,4 @@
 import React from 'react'
-import { Router, Route, Link, hashHistory } from 'react-router'
 import {Button, Card, Row, Col,Input,Icon} from 'react-materialize';
 import NavBar from './navbar'
 import ajax from 'superagent';
@@ -46,9 +45,10 @@ $(document).ready(function(){
         dropdown: true,
         scrollbar: true
     });
+    $('.modal-trigger').leanModal();
 });
 var Building1=[];
-
+var bookingsOnThisDate=[];
 var Room = React.createClass({
     getInitialState:function(){
         return {
@@ -56,11 +56,13 @@ var Room = React.createClass({
             name:'',
             date:'',
             floor:[],
+            bookings:[],
+            thisDate:[]
         }
     },
     componentWillMount: function(){
         ajax
-            .get('http://localhost:3000/api/floors')
+            .get('http://localhost:3001/api/floors')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
@@ -68,6 +70,17 @@ var Room = React.createClass({
                     Building1 = res.body
                 }
             });
+        ajax
+            .get('http://localhost:3001/api/bookings')
+            .end((err, res) => {
+                if (err || !res.ok) {
+                    alert('Oh no! error' + err);
+                } else {
+                    this.setState({
+                        bookings: res.body
+                    })
+                }
+            })
     },
     enterName:function (e) {
         document.getElementById('showName').innerHTML = $("#selectedName").val()
@@ -79,8 +92,14 @@ var Room = React.createClass({
         this.setState({
             date: e.target.value
         });
-        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
+        var bookings =this.state.bookings;
+        for (var i=0;i<bookings.length;i++) {
+            if (bookings[i].date === e.target.value) {
+                bookingsOnThisDate.push(this.state.bookings[i])
+            }
+        }
 
+        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
     },
     enterFloor:function (e) {
         var selectedfloor =$( "#selectedFloor option:selected" ).text();
@@ -94,47 +113,101 @@ var Room = React.createClass({
         }
         document.getElementById('showRoom').innerHTML = '';
         document.getElementById('showFloor').innerHTML = selectedfloor
-
     },
     selectSeat:function (e) {
-        if (this.state.selected === 'no'){
-            this.setState({
-                selected: 'yes'
-            });
-            console.log(e.target.value, this.state.selected);
-
-        } else {
-            this.setState({
-                selected: 'no'
-            })
-            console.log(e.target.value,this.state.selected);
-        }
         document.getElementById('showTime').innerHTML = $('#selectedFrom ').val() + ' - '+ $('#selectedTo').val()
-
         document.getElementById('showRoom').innerHTML = e.target.value;
-
+    },
+    showBookings:function () {
+        console.log(bookingsOnThisDate,this.state.bookings);
     },
     submit: function () {
         var name =$('#showName').text();
-        var floor =$('#showFloor').text()
-        var date=$('#showDate').text()
-        var time =$('#showTime').text()
-        var room =$('#showRoom').text()
+        var floor =$('#showFloor').text();
+        var date=$('#showDate').text();
+        var time =$('#showTime').text();
+        var room =$('#showRoom').text();
 
-        var booking ={
-            name:name,
-            floor:floor,
-            date:date,
-            time:time,
-            room:room
-        };
-        console.log(booking)
+        if(name ===""){
+            swal({
+            title: 'Please enter your name',
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+            })
+        }
+        else if(!name.match(/^[a-zA-Z]*$/g)){
+            swal({
+            title: 'Your name should only contain letters',
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        })}
+        else if(floor===""){swal({
+            title: 'Please Select the Floor',
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        })}
+        else if(date===""){swal({
+            title: 'Please Select a date',
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        })}
+        else if(room===""){swal({
+            title: 'Please select a room',
+            type: 'warning',
+            showCancelButton: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'OK'
+        })}
+        else {
+            var booking = {
+                name: name,
+                floor: floor,
+                date: date,
+                time: time,
+                room: room
+            };
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:3001/api/floors',
+                data: booking,
+                success: function () {
+                    swal(
+                        'Booking Saved!',
+                        'Thank you has been succesfully saved',
+                        'success'
+                    )
+                    location.reload();
+                },
+                error: function () {
+                    sweetAlert(
+                        'Error!',
+                        'Sorry there has been an error please try again',
+                        'error'
+                    );
+                }
+
+            });
+
+            console.log(booking)
+        }
     },
     render: function () {
         return (
             <div>
                 <NavBar/>
-
 
                 <section className="hero is-fullheight">
                         <div className="container has-text-centered">
@@ -163,7 +236,6 @@ var Room = React.createClass({
                                                     return (
                                                         <option value={room.floor} key={index} >{room.floor}</option>
                                                     )
-
                                                 })}
                                             </Input>
                                         </div>
@@ -181,25 +253,51 @@ var Room = React.createClass({
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="column is-three-quarters">
-                                            <p className="title">Select a Room</p>
-                                            <p className="subtitle">You can only book one room at a time</p>
+                                        <div className="columns">
+                                            <div className="column is-three-quarters">
+                                                <p className="title">Select a Room</p>
+                                                <p className="subtitle">Only one room can be booked at a time</p>
+                                            </div>
+                                            <div className="column ">
+
+                                                <button data-target="modal1" className="btn modal-trigger waves-effect waves-light"  onClick={this.showBookings}>on this date</button>
+                                                <div id="modal1" className="modal bottom-sheet">
+                                                        <h4>Bokings on this Date</h4>
+                                                        <p>A bunch of text</p>
+                                                    <ul className="collection">
+
+                                                    { this.state.thisDate.map((booking,index) =>{
+                                                        return (
+                                                            <li className="collection-item avatar" key={index}>
+                                                                    <span className="title">{booking.name}</span>
+                                                                    <p>{booking.time} <br />
+                                                                        {"Floor: "+booking.floor +"  Room: "+booking.room}
+                                                                    </p>
+                                                            </li>
+                                                        )
+                                                    })}
+
+                                                    </ul>
+                                                </div>
+
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="columns">
                                         <div className="column is-three-quarters is-primary">
 
                                             <div className="box rooms">
-                                                <label className="label has-text-left">Rooms</label>
+                                                <label className="subtitle has-text-left">Rooms:</label>
 
                                                 <div className="row" >
                                                     { this.state.floor.map((room,index) =>{
                                                         return (
                                                             <div className="col-md-3 roomsCol"  key={index}>
-                                                                <button className={"hvr-bounce-in room "  +this.state.selected} onClick={this.selectSeat} value={room.name} key={index}>{room.name}</button>
+                                                                <button className="hvr-bounce-in room " onClick={this.selectSeat} value={room.name} key={index}>{room.name}</button>
+
                                                             </div>
                                                         )
-
                                                     })}
                                                 </div>
 

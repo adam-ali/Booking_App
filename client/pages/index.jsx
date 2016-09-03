@@ -16,7 +16,7 @@ var Index = React.createClass({
                             <h2 className="subtitle">
                                 Subtitle
                             </h2>
-
+                            <img src="../../public/images/bookingRoom.jpg"/>
                         </div>
                     </div>
                 </div>

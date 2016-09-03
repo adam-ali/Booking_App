@@ -7,3 +7,5 @@ var Floor = new Schema({
 });
 
 module.exports = mongoose.model('floors', Floor);
+
+

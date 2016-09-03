@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/** @jsx React.DOM */'use strict';
 
 	var _react = __webpack_require__(1);
 
@@ -205,25 +205,40 @@
 	var cachedSetTimeout;
 	var cachedClearTimeout;
 
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
 	(function () {
 	    try {
-	        cachedSetTimeout = setTimeout;
-	    } catch (e) {
-	        cachedSetTimeout = function () {
-	            throw new Error('setTimeout is not defined');
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
 	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
 	    }
 	    try {
-	        cachedClearTimeout = clearTimeout;
-	    } catch (e) {
-	        cachedClearTimeout = function () {
-	            throw new Error('clearTimeout is not defined');
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
 	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
 	    }
 	} ())
 	function runTimeout(fun) {
 	    if (cachedSetTimeout === setTimeout) {
 	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
 	        return setTimeout(fun, 0);
 	    }
 	    try {
@@ -244,6 +259,11 @@
 	function runClearTimeout(marker) {
 	    if (cachedClearTimeout === clearTimeout) {
 	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
 	        return clearTimeout(marker);
 	    }
 	    try {
@@ -9913,7 +9933,7 @@
 /* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/** @jsx React.DOM */'use strict';
 
 	var _react = __webpack_require__(1);
 
@@ -9953,7 +9973,8 @@
 	                            'h2',
 	                            { className: 'subtitle' },
 	                            'Subtitle'
-	                        )
+	                        ),
+	                        _react2.default.createElement('img', { src: '../../public/images/bookingRoom.jpg' })
 	                    )
 	                )
 	            )
@@ -9967,7 +9988,7 @@
 /* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/** @jsx React.DOM */'use strict';
 
 	var _react = __webpack_require__(1);
 
@@ -10007,11 +10028,6 @@
 	                            _reactRouter.Link,
 	                            { to: '/addRoom/', className: 'nav-item is-tab' },
 	                            'Add Floor'
-	                        ),
-	                        _react2.default.createElement(
-	                            _reactRouter.Link,
-	                            { to: '/', className: 'nav-item is-tab' },
-	                            'Delete Room'
 	                        )
 	                    )
 	                )
@@ -10026,13 +10042,11 @@
 /* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/** @jsx React.DOM */'use strict';
 
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(34);
 
 	var _reactMaterialize = __webpack_require__(100);
 
@@ -10089,9 +10103,10 @@
 	        dropdown: true,
 	        scrollbar: true
 	    });
+	    $('.modal-trigger').leanModal();
 	});
 	var Building1 = [];
-
+	var bookingsOnThisDate = [];
 	var Room = _react2.default.createClass({
 	    displayName: 'Room',
 
@@ -10100,15 +10115,28 @@
 	            selected: 'no',
 	            name: '',
 	            date: '',
-	            floor: []
+	            floor: [],
+	            bookings: [],
+	            thisDate: []
 	        };
 	    },
 	    componentWillMount: function componentWillMount() {
-	        _superagent2.default.get('http://localhost:3000/api/floors').end(function (err, res) {
+	        var _this = this;
+
+	        _superagent2.default.get('http://localhost:3001/api/floors').end(function (err, res) {
 	            if (err || !res.ok) {
 	                alert('Oh no! error' + err);
 	            } else {
 	                Building1 = res.body;
+	            }
+	        });
+	        _superagent2.default.get('http://localhost:3001/api/bookings').end(function (err, res) {
+	            if (err || !res.ok) {
+	                alert('Oh no! error' + err);
+	            } else {
+	                _this.setState({
+	                    bookings: res.body
+	                });
 	            }
 	        });
 	    },
@@ -10122,6 +10150,13 @@
 	        this.setState({
 	            date: e.target.value
 	        });
+	        var bookings = this.state.bookings;
+	        for (var i = 0; i < bookings.length; i++) {
+	            if (bookings[i].date === e.target.value) {
+	                bookingsOnThisDate.push(this.state.bookings[i]);
+	            }
+	        }
+
 	        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
 	    },
 	    enterFloor: function enterFloor(e) {
@@ -10138,20 +10173,11 @@
 	        document.getElementById('showFloor').innerHTML = selectedfloor;
 	    },
 	    selectSeat: function selectSeat(e) {
-	        if (this.state.selected === 'no') {
-	            this.setState({
-	                selected: 'yes'
-	            });
-	            console.log(e.target.value, this.state.selected);
-	        } else {
-	            this.setState({
-	                selected: 'no'
-	            });
-	            console.log(e.target.value, this.state.selected);
-	        }
 	        document.getElementById('showTime').innerHTML = $('#selectedFrom ').val() + ' - ' + $('#selectedTo').val();
-
 	        document.getElementById('showRoom').innerHTML = e.target.value;
+	    },
+	    showBookings: function showBookings() {
+	        console.log(bookingsOnThisDate, this.state.bookings);
 	    },
 	    submit: function submit() {
 	        var name = $('#showName').text();
@@ -10160,17 +10186,78 @@
 	        var time = $('#showTime').text();
 	        var room = $('#showRoom').text();
 
-	        var booking = {
-	            name: name,
-	            floor: floor,
-	            date: date,
-	            time: time,
-	            room: room
-	        };
-	        console.log(booking);
+	        if (name === "") {
+	            swal({
+	                title: 'Please enter your name',
+	                type: 'warning',
+	                showCancelButton: false,
+	                confirmButtonColor: '#3085d6',
+	                cancelButtonColor: '#d33',
+	                confirmButtonText: 'OK'
+	            });
+	        } else if (!name.match(/^[a-zA-Z]*$/g)) {
+	            swal({
+	                title: 'Your name should only contain letters',
+	                type: 'warning',
+	                showCancelButton: false,
+	                confirmButtonColor: '#3085d6',
+	                cancelButtonColor: '#d33',
+	                confirmButtonText: 'OK'
+	            });
+	        } else if (floor === "") {
+	            swal({
+	                title: 'Please Select the Floor',
+	                type: 'warning',
+	                showCancelButton: false,
+	                confirmButtonColor: '#3085d6',
+	                cancelButtonColor: '#d33',
+	                confirmButtonText: 'OK'
+	            });
+	        } else if (date === "") {
+	            swal({
+	                title: 'Please Select a date',
+	                type: 'warning',
+	                showCancelButton: false,
+	                confirmButtonColor: '#3085d6',
+	                cancelButtonColor: '#d33',
+	                confirmButtonText: 'OK'
+	            });
+	        } else if (room === "") {
+	            swal({
+	                title: 'Please select a room',
+	                type: 'warning',
+	                showCancelButton: false,
+	                confirmButtonColor: '#3085d6',
+	                cancelButtonColor: '#d33',
+	                confirmButtonText: 'OK'
+	            });
+	        } else {
+	            var booking = {
+	                name: name,
+	                floor: floor,
+	                date: date,
+	                time: time,
+	                room: room
+	            };
+	            $.ajax({
+	                type: "POST",
+	                url: 'http://localhost:3001/api/floors',
+	                data: booking,
+	                success: function success() {
+	                    swal('Booking Saved!', 'Thank you has been succesfully saved', 'success');
+	                    location.reload();
+	                },
+	                error: function error() {
+	                    sweetAlert('Error!', 'Sorry there has been an error please try again', 'error');
+	                }
+
+	            });
+
+	            console.log(booking);
+	        }
 	    },
 	    render: function render() {
-	        var _this = this;
+	        var _this2 = this;
 
 	        return _react2.default.createElement(
 	            'div',
@@ -10271,16 +10358,66 @@
 	                                { className: 'row' },
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'column is-three-quarters' },
+	                                    { className: 'columns' },
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'title' },
-	                                        'Select a Room'
+	                                        'div',
+	                                        { className: 'column is-three-quarters' },
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'title' },
+	                                            'Select a Room'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'p',
+	                                            { className: 'subtitle' },
+	                                            'Only one room can be booked at a time'
+	                                        )
 	                                    ),
 	                                    _react2.default.createElement(
-	                                        'p',
-	                                        { className: 'subtitle' },
-	                                        'You can only book one room at a time'
+	                                        'div',
+	                                        { className: 'column ' },
+	                                        _react2.default.createElement(
+	                                            'button',
+	                                            { 'data-target': 'modal1', className: 'btn modal-trigger waves-effect waves-light', onClick: this.showBookings },
+	                                            'on this date'
+	                                        ),
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { id: 'modal1', className: 'modal bottom-sheet' },
+	                                            _react2.default.createElement(
+	                                                'h4',
+	                                                null,
+	                                                'Bokings on this Date'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'p',
+	                                                null,
+	                                                'A bunch of text'
+	                                            ),
+	                                            _react2.default.createElement(
+	                                                'ul',
+	                                                { className: 'collection' },
+	                                                this.state.thisDate.map(function (booking, index) {
+	                                                    return _react2.default.createElement(
+	                                                        'li',
+	                                                        { className: 'collection-item avatar', key: index },
+	                                                        _react2.default.createElement(
+	                                                            'span',
+	                                                            { className: 'title' },
+	                                                            booking.name
+	                                                        ),
+	                                                        _react2.default.createElement(
+	                                                            'p',
+	                                                            null,
+	                                                            booking.time,
+	                                                            ' ',
+	                                                            _react2.default.createElement('br', null),
+	                                                            "Floor: " + booking.floor + "  Room: " + booking.room
+	                                                        )
+	                                                    );
+	                                                })
+	                                            )
+	                                        )
 	                                    )
 	                                )
 	                            ),
@@ -10295,8 +10432,8 @@
 	                                        { className: 'box rooms' },
 	                                        _react2.default.createElement(
 	                                            'label',
-	                                            { className: 'label has-text-left' },
-	                                            'Rooms'
+	                                            { className: 'subtitle has-text-left' },
+	                                            'Rooms:'
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            'div',
@@ -10307,7 +10444,7 @@
 	                                                    { className: 'col-md-3 roomsCol', key: index },
 	                                                    _react2.default.createElement(
 	                                                        'button',
-	                                                        { className: "hvr-bounce-in room " + _this.state.selected, onClick: _this.selectSeat, value: room.name, key: index },
+	                                                        { className: 'hvr-bounce-in room ', onClick: _this2.selectSeat, value: room.name, key: index },
 	                                                        room.name
 	                                                    )
 	                                                );
@@ -10859,6 +10996,8 @@
 	  value: true
 	});
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -10879,17 +11018,18 @@
 	  var children = _ref.children;
 	  var className = _ref.className;
 	  var _ref$node = _ref.node;
-	  var node = _ref$node === undefined ? 'div' : _ref$node;
+	  var C = _ref$node === undefined ? 'div' : _ref$node;
+	  var s = _ref.s;
+	  var m = _ref.m;
+	  var l = _ref.l;
 	  var offset = _ref.offset;
 
-	  var props = _objectWithoutProperties(_ref, ['children', 'className', 'node', 'offset']);
+	  var other = _objectWithoutProperties(_ref, ['children', 'className', 'node', 's', 'm', 'l', 'offset']);
 
-	  var Child = node;
+	  var sizes = { s: s, m: m, l: l };
 	  var classes = { col: true };
-	  _constants2.default.SIZES.forEach(function (s) {
-	    if (props[s]) {
-	      classes[s + props[s]] = true;
-	    }
+	  _constants2.default.SIZES.forEach(function (size) {
+	    classes[size + sizes[size]] = sizes[size];
 	  });
 
 	  if (offset) {
@@ -10899,8 +11039,8 @@
 	  }
 
 	  return _react2.default.createElement(
-	    Child,
-	    { className: (0, _classnames2.default)(classes, className) },
+	    C,
+	    _extends({}, other, { className: (0, _classnames2.default)(classes, className) }),
 	    children
 	  );
 	};
@@ -12407,6 +12547,8 @@
 	      var _props = this.props;
 	      var browserDefault = _props.browserDefault;
 	      var children = _props.children;
+	      var error = _props.error;
+	      var success = _props.success;
 	      var defaultValue = _props.defaultValue;
 	      var label = _props.label;
 	      var placeholder = _props.placeholder;
@@ -12416,7 +12558,7 @@
 	      var type = _props.type;
 	      var validate = _props.validate;
 
-	      var other = _objectWithoutProperties(_props, ['browserDefault', 'children', 'defaultValue', 'label', 'placeholder', 's', 'm', 'l', 'type', 'validate']);
+	      var other = _objectWithoutProperties(_props, ['browserDefault', 'children', 'error', 'success', 'defaultValue', 'label', 'placeholder', 's', 'm', 'l', 'type', 'validate']);
 
 	      var sizes = { s: s, m: m, l: l };
 	      this._id = this._id || this.props.id || 'input_' + (0, _idgen2.default)();
@@ -12429,6 +12571,8 @@
 	      });
 	      var inputClasses = {
 	        validate: validate,
+	        invalid: error,
+	        valid: success,
 	        'browser-default': browserDefault && this.isSelect()
 	      };
 	      var C = void 0,
@@ -12452,7 +12596,7 @@
 
 	      var htmlLabel = label || inputType === 'radio' ? _react2.default.createElement(
 	        'label',
-	        { className: (0, _classnames2.default)(labelClasses), htmlFor: this._id },
+	        { className: (0, _classnames2.default)(labelClasses), 'data-success': success, 'data-error': error, htmlFor: this._id },
 	        label
 	      ) : null;
 
@@ -12542,6 +12686,8 @@
 	  m: _react.PropTypes.number,
 	  l: _react.PropTypes.number,
 	  label: _react.PropTypes.node,
+	  error: _react.PropTypes.string,
+	  success: _react.PropTypes.string,
 	  /**
 	   * Input field type, e.g. select, checkbox, radio, text, tel, email
 	   * @default 'text'
@@ -13012,7 +13158,7 @@
 	      }
 
 	      // Save reference to help testing
-	      this._overlayInstance = _reactDom2.default.render(this.renderOverlay(), this._overlayTarget);
+	      this._overlayInstance = _reactDom2.default.unstable_renderSubtreeIntoContainer(this, this.renderOverlay(), this._overlayTarget);
 	    }
 	  }, {
 	    key: '_unrenderOverlay',
@@ -47280,7 +47426,7 @@
 /* 390 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/** @jsx React.DOM */'use strict';
 
 	var _react = __webpack_require__(1);
 

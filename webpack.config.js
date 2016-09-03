@@ -8,7 +8,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     resolve: {
-        extensions: ['', '.js', '.jsx', '.json']
+        extensions: ['', '.js', '.jsx', '.json','.babel', '.node']
     },
     stats: {
         colors: true,
@@ -18,10 +18,50 @@ module.exports = {
     module: {
         loaders: [
             {
+                test: /\.jsx$/,
+                loader: 'jsx-loader?insertPragma=React.DOM&harmony'
+            },
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
+            },
+            {
+                test: /\.css$/,
+                loader: "style-loader!css-loader"
+            },
+            {
+                test: /\.scss$/,
+                loader: "style-loader!css-loader!sass-loader"
+            },
+            {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader?limit=8192'
+            },
+            {
+                test: /\.json$/,
+                loader: "json-loader"
+            },
+            {
+                test: /\.target.mk$/,
+                loader: "raw-loader"
+            },
+            {
+                test: /\.node$/,
+                loader: "node-loader"
+            },
+            {
                 exclude: /node_modules/,
                 test: /.jsx?$/,
                 loader: 'babel-loader'
             }
         ]
+    },
+    node: {
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
     }
 };
