@@ -10,6 +10,9 @@
     line-height:60px;
 
 }
+.btn{
+    float: left;
+}
 .roomsCol{
     padding-bottom: 20px;
     padding-right: 5px;
@@ -28,7 +31,6 @@
     color: black;
 
 }
-
 
 /*.yes{*/
     /*background-color: darkgrey;*/

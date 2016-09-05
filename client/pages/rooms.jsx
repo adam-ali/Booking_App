@@ -2,9 +2,10 @@ import React from 'react'
 import {Button, Card, Row, Col,Input,Icon} from 'react-materialize';
 import NavBar from './navbar'
 import ajax from 'superagent';
+var Promise = require('es6-promise').Promise;
 var moment = require('moment');
 moment().format();
-
+var allBookings =[];
 $(document).ready(function(){
     $('select').material_select();
     $('.datepicker').pickadate({
@@ -16,6 +17,12 @@ $(document).ready(function(){
         max:+30,
         disable: [1, 7],
         onSet: function() {
+            var date=document.getElementById('selectedDate').value
+            bookingsOnThisDate =[];
+            allBookings.map((booking)=> {
+                if (booking.date === date) {bookingsOnThisDate.push(booking)}
+            });
+            console.log(bookingsOnThisDate)
             document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
         },
         onClose: function(){
@@ -24,10 +31,10 @@ $(document).ready(function(){
 
     });
     $('input#selectedFrom').timepicker({
-        timeFormat: 'h:mm p',
+        timeFormat: 'HH:mm',
         interval: 30,
-        minTime: '9:00am',
-        maxTime: '6:00pm',
+        minTime: '09:00',
+        maxTime: '18:00',
         defaultTime: '9',
         startTime: '10:00',
         dynamic: true,
@@ -35,10 +42,10 @@ $(document).ready(function(){
         scrollbar: true
     });
     $('input#selectedTo').timepicker({
-        timeFormat: 'h:mm p',
+        timeFormat: 'HH:mm',
         interval: 30,
-        minTime: '9:00am',
-        maxTime: '6:00pm',
+        minTime: '09:00',
+        maxTime: '18:00',
         defaultTime: '9',
         startTime: '10:00',
         dynamic: true,
@@ -76,6 +83,7 @@ var Room = React.createClass({
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
                 } else {
+                    allBookings = res.body
                     this.setState({
                         bookings: res.body
                     })
@@ -87,19 +95,6 @@ var Room = React.createClass({
         this.setState({
             name: e.target.value
         })
-    },
-    enterDate:function (e) {
-        this.setState({
-            date: e.target.value
-        });
-        var bookings =this.state.bookings;
-        for (var i=0;i<bookings.length;i++) {
-            if (bookings[i].date === e.target.value) {
-                bookingsOnThisDate.push(this.state.bookings[i])
-            }
-        }
-
-        document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
     },
     enterFloor:function (e) {
         var selectedfloor =$( "#selectedFloor option:selected" ).text();
@@ -119,7 +114,9 @@ var Room = React.createClass({
         document.getElementById('showRoom').innerHTML = e.target.value;
     },
     showBookings:function () {
-        console.log(bookingsOnThisDate,this.state.bookings);
+        this.setState({
+            thisDate: bookingsOnThisDate
+        });
     },
     submit: function () {
         var name =$('#showName').text();
@@ -127,8 +124,43 @@ var Room = React.createClass({
         var date=$('#showDate').text();
         var time =$('#showTime').text();
         var room =$('#showRoom').text();
+        this.setState({
+            thisDate: bookingsOnThisDate
+        });
+        var thisStartTime = time.split('-')[0].substr(0,2);
+        var thisEndTime = time.split('-')[1].substr(0,3);
 
-        if(name ===""){
+        var alreadyBooked =false;
+        bookingsOnThisDate.map((booking)=> {
+            if (booking.floor === floor && booking.room ===room) {
+                var bookedStart = booking.time.split('-')[0].substr(0,2)
+                var bookedEnd = booking.time.split('-')[1].substr(0,3)
+
+                if(thisStartTime === bookedStart){alreadyBooked=true}
+                if(thisStartTime > bookedStart){
+                    if (thisStartTime<bookedEnd){alreadyBooked=true}
+                }
+                if(thisStartTime < bookedStart){
+                    if (thisEndTime>bookedStart){alreadyBooked=true}
+
+                }
+
+                console.log(thisStartTime,thisEndTime)
+                console.log(bookedStart,bookedEnd)
+            }
+        });
+        if (alreadyBooked===true){
+            swal({
+                title: 'Room already booked',
+                text: 'Select a different time, you can look at the bookings on this day by selecting the "bookings on this date" button',
+                type: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            })
+        }
+        else if(name ===""){
             swal({
             title: 'Please enter your name',
             type: 'warning',
@@ -138,7 +170,7 @@ var Room = React.createClass({
             confirmButtonText: 'OK'
             })
         }
-        else if(!name.match(/^[a-zA-Z]*$/g)){
+        else if(!name.  match(/^[a-zA-Z]*$/g)){
             swal({
             title: 'Your name should only contain letters',
             type: 'warning',
@@ -179,7 +211,8 @@ var Room = React.createClass({
                 time: time,
                 room: room
             };
-            $.ajax({
+            setTimeout(
+                $.ajax({
                 type: "POST",
                 url: 'http://localhost:3001/api/floors',
                 data: booking,
@@ -188,8 +221,9 @@ var Room = React.createClass({
                         'Booking Saved!',
                         'Thank you has been succesfully saved',
                         'success'
-                    )
-                    location.reload();
+                    ).then(function() {
+                        location.reload();
+                    })
                 },
                 error: function () {
                     sweetAlert(
@@ -199,7 +233,8 @@ var Room = React.createClass({
                     );
                 }
 
-            });
+            })
+            ,2000);
 
             console.log(booking)
         }
@@ -241,7 +276,7 @@ var Room = React.createClass({
                                         </div>
                                         <div className="col s3">
                                             <label >Date</label>
-                                            <input className="datepicker" id="selectedDate" onChange={this.enterDate} min={moment().format("YYYY-MM-DD")} placeholder="Select date" />
+                                            <input className="datepicker" id="selectedDate" min={moment().format("YYYY-MM-DD")} placeholder="Select date" />
                                         </div>
                                         <div className="col s2">
                                             <label >From</label>
@@ -260,10 +295,8 @@ var Room = React.createClass({
                                             </div>
                                             <div className="column ">
 
-                                                <button data-target="modal1" className="btn modal-trigger waves-effect waves-light"  onClick={this.showBookings}>on this date</button>
                                                 <div id="modal1" className="modal bottom-sheet">
                                                         <h4>Bokings on this Date</h4>
-                                                        <p>A bunch of text</p>
                                                     <ul className="collection">
 
                                                     { this.state.thisDate.map((booking,index) =>{
@@ -289,6 +322,8 @@ var Room = React.createClass({
 
                                             <div className="box rooms">
                                                 <label className="subtitle has-text-left">Rooms:</label>
+                                                <button data-target="modal1" className="btn modal-trigger waves-effect waves-light"  onClick={this.showBookings}>on this date</button>
+
 
                                                 <div className="row" >
                                                     { this.state.floor.map((room,index) =>{
