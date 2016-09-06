@@ -6,54 +6,6 @@ var Promise = require('es6-promise').Promise;
 var moment = require('moment');
 moment().format();
 var allBookings =[];
-$(document).ready(function(){
-    $('select').material_select();
-    $('.datepicker').pickadate({
-        format: 'yyyy-mm-dd',
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15, // Creates a dropdown of 15 years to control year
-        min: moment().format("YYYY-MM-DD"),
-        electYears: 3,
-        max:+30,
-        disable: [1, 7],
-        onSet: function() {
-            var date=document.getElementById('selectedDate').value
-            bookingsOnThisDate =[];
-            allBookings.map((booking)=> {
-                if (booking.date === date) {bookingsOnThisDate.push(booking)}
-            });
-            console.log(bookingsOnThisDate)
-            document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
-        },
-        onClose: function(){
-            $(document.activeElement).blur()
-        }
-
-    });
-    $('input#selectedFrom').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 30,
-        minTime: '09:00',
-        maxTime: '18:00',
-        defaultTime: '9',
-        startTime: '10:00',
-        dynamic: true,
-        dropdown: true,
-        scrollbar: true
-    });
-    $('input#selectedTo').timepicker({
-        timeFormat: 'HH:mm',
-        interval: 30,
-        minTime: '09:00',
-        maxTime: '18:00',
-        defaultTime: '9',
-        startTime: '10:00',
-        dynamic: true,
-        dropdown: true,
-        scrollbar: true
-    });
-    $('.modal-trigger').leanModal();
-});
 var Building1=[];
 var bookingsOnThisDate=[];
 var Room = React.createClass({
@@ -67,7 +19,53 @@ var Room = React.createClass({
             thisDate:[]
         }
     },
-    componentWillMount: function(){
+    componentDidMount: function(){
+        $('select').material_select();
+        $('.datepicker').pickadate({
+            format: 'yyyy-mm-dd',
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15, // Creates a dropdown of 15 years to control year
+            min: moment().format("YYYY-MM-DD"),
+            electYears: 3,
+            max:+30,
+            disable: [1, 7],
+            onSet: function() {
+                var date=document.getElementById('selectedDate').value
+                bookingsOnThisDate =[];
+                allBookings.map((booking)=> {
+                    if (booking.date === date) {bookingsOnThisDate.push(booking)}
+                });
+                console.log(bookingsOnThisDate)
+                document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
+            },
+            onClose: function(){
+                $(document.activeElement).blur()
+            }
+
+        });
+        $('input#selectedFrom').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '09:00',
+            maxTime: '18:00',
+            defaultTime: '9',
+            startTime: '10:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('input#selectedTo').timepicker({
+            timeFormat: 'HH:mm',
+            interval: 30,
+            minTime: '09:00',
+            maxTime: '18:00',
+            defaultTime: '9',
+            startTime: '10:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('.modal-trigger').leanModal();
         ajax
             .get('http://localhost:3001/api/floors')
             .end((err, res) => {

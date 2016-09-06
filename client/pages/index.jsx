@@ -13,9 +13,8 @@ var Index = React.createClass({
                             Home Page
                         </h1>
                         <h2 className="subtitle">
-                            Subtitle
+                            Book a room, View or delete the booking in this booking app
                         </h2>
-                        <img src="../../public/images/bookingRoom.jpg"/>
                     </div>
                 </section>
             </div>

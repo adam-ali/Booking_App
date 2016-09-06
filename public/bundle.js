@@ -60,7 +60,11 @@
 
 	var _rooms2 = _interopRequireDefault(_rooms);
 
-	var _deleteBooking = __webpack_require__(393);
+	var _viewBookings = __webpack_require__(393);
+
+	var _viewBookings2 = _interopRequireDefault(_viewBookings);
+
+	var _deleteBooking = __webpack_require__(394);
 
 	var _deleteBooking2 = _interopRequireDefault(_deleteBooking);
 
@@ -79,8 +83,9 @@
 	            _reactRouter.Router,
 	            { history: _reactRouter.hashHistory },
 	            _react2.default.createElement(_reactRouter.Route, { path: '/', component: _index2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/rooms', component: _rooms2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/delete', component: _deleteBooking2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/book', component: _rooms2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/delete', component: _deleteBooking2.default }),
+	            _react2.default.createElement(_reactRouter.Route, { path: '/view', component: _viewBookings2.default })
 	        );
 	    }
 	});
@@ -9969,9 +9974,8 @@
 	                    _react2.default.createElement(
 	                        'h2',
 	                        { className: 'subtitle' },
-	                        'Subtitle'
-	                    ),
-	                    _react2.default.createElement('img', { src: '../../public/images/bookingRoom.jpg' })
+	                        'Book a room, View or delete the booking in this booking app'
+	                    )
 	                )
 	            )
 	        );
@@ -10003,7 +10007,7 @@
 	            null,
 	            _react2.default.createElement(
 	                'nav',
-	                { className: 'nav has-shadow' },
+	                { className: 'nav has-shadow bookingBox' },
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'container' },
@@ -10017,8 +10021,13 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
-	                            { to: '/rooms/', className: 'nav-item is-tab' },
+	                            { to: '/book/', className: 'nav-item is-tab' },
 	                            'Book Room'
+	                        ),
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: '/View/', className: 'nav-item is-tab' },
+	                            'View Bookings'
 	                        ),
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
@@ -10060,56 +10069,6 @@
 	var moment = __webpack_require__(290);
 	moment().format();
 	var allBookings = [];
-	$(document).ready(function () {
-	    $('select').material_select();
-	    $('.datepicker').pickadate({
-	        format: 'yyyy-mm-dd',
-	        selectMonths: true, // Creates a dropdown to control month
-	        selectYears: 15, // Creates a dropdown of 15 years to control year
-	        min: moment().format("YYYY-MM-DD"),
-	        electYears: 3,
-	        max: +30,
-	        disable: [1, 7],
-	        onSet: function onSet() {
-	            var date = document.getElementById('selectedDate').value;
-	            bookingsOnThisDate = [];
-	            allBookings.map(function (booking) {
-	                if (booking.date === date) {
-	                    bookingsOnThisDate.push(booking);
-	                }
-	            });
-	            console.log(bookingsOnThisDate);
-	            document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
-	        },
-	        onClose: function onClose() {
-	            $(document.activeElement).blur();
-	        }
-
-	    });
-	    $('input#selectedFrom').timepicker({
-	        timeFormat: 'HH:mm',
-	        interval: 30,
-	        minTime: '09:00',
-	        maxTime: '18:00',
-	        defaultTime: '9',
-	        startTime: '10:00',
-	        dynamic: true,
-	        dropdown: true,
-	        scrollbar: true
-	    });
-	    $('input#selectedTo').timepicker({
-	        timeFormat: 'HH:mm',
-	        interval: 30,
-	        minTime: '09:00',
-	        maxTime: '18:00',
-	        defaultTime: '9',
-	        startTime: '10:00',
-	        dynamic: true,
-	        dropdown: true,
-	        scrollbar: true
-	    });
-	    $('.modal-trigger').leanModal();
-	});
 	var Building1 = [];
 	var bookingsOnThisDate = [];
 	var Room = _react2.default.createClass({
@@ -10125,9 +10084,57 @@
 	            thisDate: []
 	        };
 	    },
-	    componentWillMount: function componentWillMount() {
+	    componentDidMount: function componentDidMount() {
 	        var _this = this;
 
+	        $('select').material_select();
+	        $('.datepicker').pickadate({
+	            format: 'yyyy-mm-dd',
+	            selectMonths: true, // Creates a dropdown to control month
+	            selectYears: 15, // Creates a dropdown of 15 years to control year
+	            min: moment().format("YYYY-MM-DD"),
+	            electYears: 3,
+	            max: +30,
+	            disable: [1, 7],
+	            onSet: function onSet() {
+	                var date = document.getElementById('selectedDate').value;
+	                bookingsOnThisDate = [];
+	                allBookings.map(function (booking) {
+	                    if (booking.date === date) {
+	                        bookingsOnThisDate.push(booking);
+	                    }
+	                });
+	                console.log(bookingsOnThisDate);
+	                document.getElementById('showDate').innerHTML = document.getElementById('selectedDate').value;
+	            },
+	            onClose: function onClose() {
+	                $(document.activeElement).blur();
+	            }
+
+	        });
+	        $('input#selectedFrom').timepicker({
+	            timeFormat: 'HH:mm',
+	            interval: 30,
+	            minTime: '09:00',
+	            maxTime: '18:00',
+	            defaultTime: '9',
+	            startTime: '10:00',
+	            dynamic: true,
+	            dropdown: true,
+	            scrollbar: true
+	        });
+	        $('input#selectedTo').timepicker({
+	            timeFormat: 'HH:mm',
+	            interval: 30,
+	            minTime: '09:00',
+	            maxTime: '18:00',
+	            defaultTime: '9',
+	            startTime: '10:00',
+	            dynamic: true,
+	            dropdown: true,
+	            scrollbar: true
+	        });
+	        $('.modal-trigger').leanModal();
 	        _superagent2.default.get('http://localhost:3001/api/floors').end(function (err, res) {
 	            if (err || !res.ok) {
 	                alert('Oh no! error' + err);
@@ -33408,7 +33415,7 @@
 /* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
@@ -48428,6 +48435,117 @@
 
 /***/ },
 /* 393 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @jsx React.DOM */'use strict';
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(34);
+
+	var _navbar = __webpack_require__(98);
+
+	var _navbar2 = _interopRequireDefault(_navbar);
+
+	var _superagent = __webpack_require__(280);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	var _reactMaterialize = __webpack_require__(100);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	$(document).ready(function () {});
+	var allBookings = [];
+	var viewBookings = _react2.default.createClass({
+	    displayName: 'viewBookings',
+
+	    getInitialState: function getInitialState() {
+	        return {
+	            bookings: []
+	        };
+	    },
+	    componentWillMount: function componentWillMount() {
+	        var _this = this;
+
+	        _superagent2.default.get('http://localhost:3001/api/bookings').end(function (err, res) {
+	            if (err || !res.ok) {
+	                alert('Oh no! error' + err);
+	            } else {
+	                allBookings = res.body;
+	                _this.setState({
+	                    bookings: res.body
+	                });
+	            }
+	        });
+	    },
+
+	    render: function render() {
+	        return _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(_navbar2.default, null),
+	            _react2.default.createElement(
+	                'section',
+	                { className: 'hero is-fullheight' },
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'container has-text-centered' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        { className: 'title' },
+	                        'View all Bookings'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'tile is-parent ' },
+	                        _react2.default.createElement(
+	                            'article',
+	                            { className: 'tile is-child notification bookingBox' },
+	                            _react2.default.createElement(
+	                                'ul',
+	                                { className: 'collection' },
+	                                allBookings.map(function (booking, index) {
+	                                    return _react2.default.createElement(
+	                                        'div',
+	                                        { className: ' columns', key: index },
+	                                        _react2.default.createElement(
+	                                            'div',
+	                                            { className: 'hvr-grow column', key: index },
+	                                            _react2.default.createElement(
+	                                                'li',
+	                                                { className: ' collection-item avatar', key: index },
+	                                                _react2.default.createElement(
+	                                                    'span',
+	                                                    { className: 'title' },
+	                                                    booking.name
+	                                                ),
+	                                                _react2.default.createElement(
+	                                                    'p',
+	                                                    null,
+	                                                    'Date ' + booking.date + ' Time: ' + booking.time,
+	                                                    _react2.default.createElement('br', null),
+	                                                    'Floor: ' + booking.floor + ' Room: ' + booking.room
+	                                                )
+	                                            )
+	                                        )
+	                                    );
+	                                })
+	                            )
+	                        )
+	                    )
+	                )
+	            )
+	        );
+	    }
+	});
+
+	module.exports = viewBookings;
+
+/***/ },
+/* 394 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/** @jsx React.DOM */'use strict';
