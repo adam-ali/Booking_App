@@ -17,7 +17,14 @@ developersRouter.route('/')
             }
             return res.status(201).json(doc);
         });
-    });
+    })
+    .delete(function (req,res,next) {
+            Booking.remove({ _id: req.body._id },function (err,doc) {
+                return res.status(201).json(doc);
+            })
+        }
+        
+    );
 
 module.exports = developersRouter;
 

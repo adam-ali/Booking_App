@@ -60,9 +60,9 @@
 
 	var _rooms2 = _interopRequireDefault(_rooms);
 
-	var _addFloor = __webpack_require__(393);
+	var _deleteBooking = __webpack_require__(393);
 
-	var _addFloor2 = _interopRequireDefault(_addFloor);
+	var _deleteBooking2 = _interopRequireDefault(_deleteBooking);
 
 	var _reactDom = __webpack_require__(126);
 
@@ -80,7 +80,7 @@
 	            { history: _reactRouter.hashHistory },
 	            _react2.default.createElement(_reactRouter.Route, { path: '/', component: _index2.default }),
 	            _react2.default.createElement(_reactRouter.Route, { path: '/rooms', component: _rooms2.default }),
-	            _react2.default.createElement(_reactRouter.Route, { path: '/addRoom', component: _addFloor2.default })
+	            _react2.default.createElement(_reactRouter.Route, { path: '/delete', component: _deleteBooking2.default })
 	        );
 	    }
 	});
@@ -9956,26 +9956,22 @@
 	            null,
 	            _react2.default.createElement(_navbar2.default, null),
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'container' },
+	                'section',
+	                { className: 'hero is-fullheight' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'hero-body' },
+	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
-	                        'div',
-	                        { className: 'container has-text-centered' },
-	                        _react2.default.createElement(
-	                            'h1',
-	                            { className: 'title' },
-	                            'Home Page'
-	                        ),
-	                        _react2.default.createElement(
-	                            'h2',
-	                            { className: 'subtitle' },
-	                            'Subtitle'
-	                        ),
-	                        _react2.default.createElement('img', { src: '../../public/images/bookingRoom.jpg' })
-	                    )
+	                        'h1',
+	                        { className: 'title' },
+	                        'Home Page'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        { className: 'subtitle' },
+	                        'Subtitle'
+	                    ),
+	                    _react2.default.createElement('img', { src: '../../public/images/bookingRoom.jpg' })
 	                )
 	            )
 	        );
@@ -10026,8 +10022,8 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            _reactRouter.Link,
-	                            { to: '/addRoom/', className: 'nav-item is-tab' },
-	                            'Add Floor'
+	                            { to: '/delete/', className: 'nav-item is-tab' },
+	                            'Delete Booking'
 	                        )
 	                    )
 	                )
@@ -48446,34 +48442,124 @@
 
 	var _navbar2 = _interopRequireDefault(_navbar);
 
+	var _superagent = __webpack_require__(280);
+
+	var _superagent2 = _interopRequireDefault(_superagent);
+
+	var _reactMaterialize = __webpack_require__(100);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	$(document).ready(function () {
+	    $('select').material_select();
+	});
+	var allBookings = [];
 	var AddFloor = _react2.default.createClass({
 	    displayName: 'AddFloor',
 
+	    getInitialState: function getInitialState() {
+	        return {
+	            bookings: []
+	        };
+	    },
+	    componentWillMount: function componentWillMount() {
+	        var _this = this;
+
+	        _superagent2.default.get('http://localhost:3001/api/bookings').end(function (err, res) {
+	            if (err || !res.ok) {
+	                alert('Oh no! error' + err);
+	            } else {
+	                allBookings = res.body;
+	                _this.setState({
+	                    bookings: res.body
+	                });
+	            }
+	        });
+	    },
+	    delete: function _delete() {
+	        swal({
+	            title: 'Are you sure?',
+	            text: "You won't be able to revert this!",
+	            type: 'warning',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: 'Yes, delete it!'
+	        }).then(function () {
+	            //ajax request
+	            $.ajax({
+	                type: "DELETE",
+	                url: 'http://localhost:3001/api/bookings',
+	                data: allBookings[5],
+	                success: function success() {
+	                    console.log('deleted sucessss');
+	                    location.reload();
+	                },
+	                error: function error() {
+	                    sweetAlert('Error!', 'Sorry there has been an error please try again', 'error');
+	                }
+
+	            });
+	            swal('Deleted!', 'Your file has been deleted.', 'success');
+	        });
+	    },
 	    render: function render() {
 	        return _react2.default.createElement(
 	            'div',
 	            null,
 	            _react2.default.createElement(_navbar2.default, null),
 	            _react2.default.createElement(
-	                'div',
-	                { className: 'container' },
+	                'section',
+	                { className: 'hero is-fullheight' },
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'hero-body' },
+	                    { className: 'container has-text-centered' },
+	                    _react2.default.createElement(
+	                        'h1',
+	                        { className: 'title' },
+	                        'Delete a Booking'
+	                    ),
+	                    _react2.default.createElement(
+	                        'h2',
+	                        { className: 'subtitle' },
+	                        'select a booking from the list'
+	                    ),
 	                    _react2.default.createElement(
 	                        'div',
-	                        { className: 'container has-text-centered' },
+	                        { className: 'tile is-parent ' },
 	                        _react2.default.createElement(
-	                            'h1',
-	                            { className: 'title' },
-	                            'Add Floor'
-	                        ),
-	                        _react2.default.createElement(
-	                            'h2',
-	                            { className: 'subtitle' },
-	                            'Subtitle'
+	                            'article',
+	                            { className: 'tile is-child notification bookingBox' },
+	                            _react2.default.createElement(
+	                                _reactMaterialize.Input,
+	                                { s: 12, type: 'select', onChange: this.enterFloor, id: 'selectedFloor', label: 'Select Floor' },
+	                                _react2.default.createElement(
+	                                    'option',
+	                                    { value: '', disabled: true },
+	                                    'choose floor'
+	                                ),
+	                                allBookings.map(function (booking, index) {
+	                                    return _react2.default.createElement(
+	                                        'option',
+	                                        { value: booking.name, key: index },
+	                                        booking.name + '- Date:' + booking.date + ' Time:' + booking.time + ' Floor:' + booking.floor + ' Room:' + booking.room
+	                                    );
+	                                })
+	                            ),
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'column' },
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { className: 'btn waves-effect waves-light dltbtn', onClick: this.delete },
+	                                    'Delete',
+	                                    _react2.default.createElement(
+	                                        'i',
+	                                        { className: 'material-icons right' },
+	                                        'delete'
+	                                    )
+	                                )
+	                            )
 	                        )
 	                    )
 	                )
