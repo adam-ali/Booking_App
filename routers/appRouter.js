@@ -5,7 +5,7 @@ var path = require('path');
 var appRouter = express.Router();
 
 appRouter.get('/',function (req,res) {
-    res.sendFile(path.resolve('./public/html/index.html'));
+    res.sendFile(path.resolve('./index.html'));
 });
 
 // appRouter.use('/', developersRouter);

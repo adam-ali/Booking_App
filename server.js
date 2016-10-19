@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express();
+var app = express()
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var apiRouter = require('./routers/apiRouter.js');
@@ -9,10 +9,11 @@ var path = require('path');
 
 const https = require('https');
 const fs = require('fs');
-
+var port = process.env.PORT || 3001;
 const options = {
     key: fs.readFileSync(path.join(__dirname,'ssl','server.key')),
-    cert: fs.readFileSync(path.join(__dirname,'ssl','server.crt'))
+    cert: fs.readFileSync(path.join(__dirname,'ssl','server.crt')),
+    host: 'https://adam-ali.github.io/Booking_App/'
 };
 
 mongoose.connect('mongodb://localhost:27017/booking', function(err, db) {
@@ -38,8 +39,6 @@ function errorHandler(err,req,res,next){
     res.status(500).send('Something broke!!');
 }
 
-
-https.createServer(options, app).listen('https://adam-ali.github.io/Booking_App');
-
-// app.listen(3001);
+https.createServer(options, app).listen(3001);
+// app.listen(port);
 
