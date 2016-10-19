@@ -10201,14 +10201,14 @@
 	            scrollbar: true
 	        });
 	        $('.modal-trigger').leanModal();
-	        _superagent2.default.get('http://localhost:3001/api/floors').end(function (err, res) {
+	        _superagent2.default.get('https://localhost:3001/api/floors').end(function (err, res) {
 	            if (err || !res.ok) {
 	                alert('Oh no! error' + err);
 	            } else {
 	                Building1 = res.body;
 	            }
 	        });
-	        _superagent2.default.get('http://localhost:3001/api/bookings').end(function (err, res) {
+	        _superagent2.default.get('https://localhost:3001/api/bookings').end(function (err, res) {
 	            if (err || !res.ok) {
 	                alert('Oh no! error' + err);
 	            } else {
