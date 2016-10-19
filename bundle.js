@@ -9985,7 +9985,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'imgWrap' },
-	                                _react2.default.createElement('img', { src: './Images/bookingRoom.jpg', width: '610', height: '390' }),
+	                                _react2.default.createElement('img', { src: __webpack_require__(395), width: '610', height: '390' }),
 	                                _react2.default.createElement(
 	                                    'p',
 	                                    { className: 'imgDescription' },
@@ -48747,6 +48747,12 @@
 	});
 
 	module.exports = AddFloor;
+
+/***/ },
+/* 395 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "66f11027baee6b1af6e44995b8a115e9.jpg";
 
 /***/ }
 /******/ ]);
