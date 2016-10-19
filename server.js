@@ -7,12 +7,19 @@ var appRouter = require('./routers/appRouter.js');
 var mongoose = require('mongoose');
 var path = require('path');
 
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+    key: fs.readFileSync(path.join(__dirname,'ssl','server.key')),
+    cert: fs.readFileSync(path.join(__dirname,'ssl','server.crt'))
+};
+
 mongoose.connect('mongodb://localhost:27017/booking', function(err, db) {
     if(!err) {
         console.log("connected to the Database");
     }
 });
-
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,5 +32,9 @@ function errorHandler(err,req,res,next){
     console.log(err.stack);
     res.status(500).send('Something broke!!');
 }
-app.listen(3001);
+
+
+https.createServer(options, app).listen(3001);
+
+// app.listen(3001);
 
