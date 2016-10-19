@@ -35,7 +35,7 @@ var viewBookings = React.createClass({
                 <NavBar/>
                 <section className="hero is-fullheight">
                     <div className="container has-text-centered">
-                        <h1 className="title">
+                        <h1>
                             View all Bookings
                         </h1>
                         <div className="tile is-parent ">

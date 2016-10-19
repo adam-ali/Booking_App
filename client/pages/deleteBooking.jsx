@@ -69,10 +69,10 @@ var AddFloor = React.createClass({
                 <NavBar/>
                 <section className="hero is-fullheight">
                     <div className="container has-text-centered">
-                        <h1 className="title">
+                        <h1 >
                            Delete a Booking
                         </h1>
-                        <h2 className="subtitle">
+                        <h2 className="title">
                             select a booking from the list
                         </h2>
                         <div className="tile is-parent ">

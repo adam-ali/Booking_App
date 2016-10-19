@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "./public/";
+/******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -9968,13 +9968,73 @@
 	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
 	                        'h1',
-	                        { className: 'title' },
+	                        null,
 	                        'Home Page'
 	                    ),
 	                    _react2.default.createElement(
-	                        'h2',
-	                        { className: 'subtitle' },
-	                        'Book a room, View or delete the booking in this booking app'
+	                        'h1',
+	                        { className: 'title' },
+	                        'A booking application that allows you to reserve a room in your company building'
+	                    ),
+	                    _react2.default.createElement(
+	                        'div',
+	                        { className: 'row' },
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col s6' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'imgWrap' },
+	                                _react2.default.createElement('img', { src: './Images/bookingRoom.jpg', width: '610', height: '390' }),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'imgDescription' },
+	                                    ' Chose from different rooms on different '
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col s6' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'imgWrap' },
+	                                _react2.default.createElement('img', { src: './Images/MAKEABOOKING.jpg', width: '610', height: '390' }),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'imgDescription' },
+	                                    'Book a room '
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col s6' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'imgWrap' },
+	                                _react2.default.createElement('img', { src: './Images/viewall.jpg', width: '610', height: '390 ' }),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'imgDescription' },
+	                                    'View all bookings'
+	                                )
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'col s6' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'imgWrap' },
+	                                _react2.default.createElement('img', { src: './Images/dlt.jpg', width: '610', height: '390 ' }),
+	                                _react2.default.createElement(
+	                                    'p',
+	                                    { className: 'imgDescription' },
+	                                    'Delete a booking  '
+	                                )
+	                            )
+	                        )
 	                    )
 	                )
 	            )
@@ -10313,12 +10373,12 @@
 	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
 	                        'h1',
-	                        { className: 'title' },
+	                        null,
 	                        'Book a Room'
 	                    ),
 	                    _react2.default.createElement(
 	                        'h2',
-	                        { className: 'subtitle' },
+	                        { className: 'title' },
 	                        'Select a floor'
 	                    ),
 	                    _react2.default.createElement(
@@ -48495,7 +48555,7 @@
 	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
 	                        'h1',
-	                        { className: 'title' },
+	                        null,
 	                        'View all Bookings'
 	                    ),
 	                    _react2.default.createElement(
@@ -48634,12 +48694,12 @@
 	                    { className: 'container has-text-centered' },
 	                    _react2.default.createElement(
 	                        'h1',
-	                        { className: 'title' },
+	                        null,
 	                        'Delete a Booking'
 	                    ),
 	                    _react2.default.createElement(
 	                        'h2',
-	                        { className: 'subtitle' },
+	                        { className: 'title' },
 	                        'select a booking from the list'
 	                    ),
 	                    _react2.default.createElement(

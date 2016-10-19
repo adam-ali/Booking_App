@@ -244,10 +244,10 @@ var Room = React.createClass({
 
                 <section className="hero is-fullheight">
                         <div className="container has-text-centered">
-                            <h1 className="title">
+                            <h1>
                                 Book a Room
                             </h1>
-                            <h2 className="subtitle">
+                            <h2 className="title">
                                 Select a floor
                             </h2>
 

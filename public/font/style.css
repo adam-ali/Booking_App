@@ -1,14 +1,18 @@
 .room{
     height: 70px;
     width: 80px;
-
     border-radius: 5px;
-    background-color: #EBECEE;
+    /*background-color: #EBECEE;*/
     color: black;
     text-align: center;
     font-family: sans-serif;
     line-height:60px;
-
+}
+.hero{
+    background-color: #ECECEA;
+}
+a:hover{
+    text-decoration: none;
 }
 .btn{
     float: left;
@@ -28,16 +32,39 @@
 }
 .bookingBox{
     min-width: 650px;
-    background-color: #EBECEE;
+    /*background-color: #EBECEE;*/
+    background-color: whitesmoke;
 }
 .subtitle{
     color: black;
+}
+.imgWrap {
+    position: relative;
+    visibility: visible;
+    padding-bottom: 10px;
+
+}
+.imgDescription {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(225, 225, 225, 0.85);
+    font: normal normal normal 23px/1.4em basic,sans-serif;
+
+    padding-top: 170px;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition: opacity .5s ease-in-out;
+    -webkit-transition: opacity .5s ease-in-out;
+    -moz-transition: opacity .5s ease-in-out;
 
 }
 
-/*.yes{*/
-    /*background-color: darkgrey;*/
-/*}*/
-/*.no{*/
-    /*background-color: cornflowerblue;*/
-/*}*/
+.imgWrap:hover .imgDescription {
+    visibility: visible;
+    opacity: 1;
+}

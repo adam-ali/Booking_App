@@ -9,13 +9,43 @@ var Index = React.createClass({
                 <NavBar/>
                 <section className="hero is-fullheight">
                     <div className="container has-text-centered">
-                        <h1 className="title">
+                        <h1>
                             Home Page
                         </h1>
-                        <h2 className="subtitle">
-                            Book a room, View or delete the booking in this booking app
-                        </h2>
+                        <h1 className="title">
+                            A booking application that allows you to reserve a room in your company building
+                        </h1>
+                        <div className="row">
+                            <div className="col s6">
+                                <div className="imgWrap">
+                                    <img src="./Images/bookingRoom.jpg" width="610" height="390"/>
+                                    <p className="imgDescription"> Chose from different rooms on different </p>
+                                </div>
+                            </div>
+                            <div className="col s6">
+                                <div className="imgWrap">
+                                    <img src="./Images/MAKEABOOKING.jpg" width="610" height="390"/>
+                                    <p className="imgDescription">Book a room </p>
+
+                                </div>
+                            </div>
+                            <div className="col s6">
+                                <div className="imgWrap">
+                                    <img src="./Images/viewall.jpg" width="610" height="390 "/>
+                                    <p className="imgDescription">View all bookings</p>
+
+                                </div>
+
+                            </div>
+                            <div className="col s6">
+                                <div className="imgWrap">
+                                    <img src="./Images/dlt.jpg" width="610" height="390 "/>
+                                    <p className="imgDescription">Delete a booking  </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </section>
             </div>
         )

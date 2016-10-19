@@ -3,8 +3,8 @@ module.exports = {
     context: __dirname,
     entry: './client/app.jsx',
     output: {
-        path: path.join(__dirname, './public/'),
-        publicPath: './public/',
+        path: path.join(__dirname, './'),
+        publicPath: './',
         filename: 'bundle.js'
     },
     resolve: {
