@@ -67,7 +67,7 @@ var Room = React.createClass({
         });
         $('.modal-trigger').leanModal();
         ajax
-            .get('http://localhost:3001/api/floors')
+            .get('//localhost:3001/api/floors')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
@@ -76,7 +76,7 @@ var Room = React.createClass({
                 }
             });
         ajax
-            .get('http://localhost:3001/api/bookings')
+            .get('//localhost:3001/api/bookings')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
@@ -212,7 +212,7 @@ var Room = React.createClass({
             setTimeout(
                 $.ajax({
                 type: "POST",
-                url: 'http://localhost:3001/api/floors',
+                url: '//localhost:3001/api/floors',
                 data: booking,
                 success: function () {
                     swal(
