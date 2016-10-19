@@ -28,6 +28,7 @@ module.exports = {
                     'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
             },
+            { test: /\.jpg$/, loader: './public/images' },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
                 loaders: [
