@@ -24,7 +24,7 @@ var Index = React.createClass({
                             </div>
                             <div className="col s6">
                                 <div className="imgWrap">
-                                    <img src={require("../Images/MAKEABOOKING.jpg")} width="610" height="390"/>
+                                    <img src={require("../../Images/MAKEABOOKING.jpg")} width="610" height="390"/>
                                     <p className="imgDescription">Book a room </p>
 
                                 </div>

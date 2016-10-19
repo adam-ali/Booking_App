@@ -9999,7 +9999,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'imgWrap' },
-	                                _react2.default.createElement('img', { src: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../Images/MAKEABOOKING.jpg\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())), width: '610', height: '390' }),
+	                                _react2.default.createElement('img', { src: __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../Images/MAKEABOOKING.jpg\""); e.code = 'MODULE_NOT_FOUND'; throw e; }())), width: '610', height: '390' }),
 	                                _react2.default.createElement(
 	                                    'p',
 	                                    { className: 'imgDescription' },
@@ -33481,7 +33481,7 @@
 /* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var require;var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
+	var __WEBPACK_AMD_DEFINE_RESULT__;var require;/* WEBPACK VAR INJECTION */(function(process, global, module) {/*!
 	 * @overview es6-promise - a tiny implementation of Promises/A+.
 	 * @copyright Copyright (c) 2014 Yehuda Katz, Tom Dale, Stefan Penner and contributors (Conversion to ES6 API by Jake Archibald)
 	 * @license   Licensed under MIT license
