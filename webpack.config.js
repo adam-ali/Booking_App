@@ -22,18 +22,10 @@ module.exports = {
                 loader: 'jsx-loader?insertPragma=React.DOM&harmony'
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
+                test: /\.(png|jpg|)$/,
+                loader: 'url-loader?limit=200000'
             },
-            { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
-            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=90000' },
-            {
-                test: /\.jpg$/,
-                loader: "file-loader"
-            },
+
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
