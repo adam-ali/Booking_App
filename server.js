@@ -12,7 +12,10 @@ mongoose.connect('mongodb://localhost:27017/booking', function(err, db) {
         console.log("connected to the Database");
     }
 });
-
+app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: path.join(__dirname, './'),
+}));
 app.use(express.static(__dirname+'/public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

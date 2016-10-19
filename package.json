@@ -30,7 +30,8 @@
     "react-router": "^2.6.1",
     "redux-form": "^5.3.2",
     "superagent": "^1.8.3",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "image-webpack-loader": "^2.0.0",
