@@ -16,7 +16,7 @@ var AddFloor = React.createClass({
     },
     componentWillMount: function(){
         ajax
-            .get('http://localhost:3001/api/bookings')
+            .get('//localhost:3001/api/bookings')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
@@ -41,7 +41,7 @@ var AddFloor = React.createClass({
             //ajax request
             $.ajax({
                 type: "DELETE",
-                url: 'http://localhost:3001/api/bookings',
+                url: '//localhost:3001/api/bookings',
                 data: allBookings[5],
                 success: function () {
                     console.log('deleted sucessss')

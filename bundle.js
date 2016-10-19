@@ -48536,7 +48536,7 @@
 	    componentWillMount: function componentWillMount() {
 	        var _this = this;
 
-	        _superagent2.default.get('http://localhost:3001/api/bookings').end(function (err, res) {
+	        _superagent2.default.get('//localhost:3001/api/bookings').end(function (err, res) {
 	            if (err || !res.ok) {
 	                alert('Oh no! error' + err);
 	            } else {
@@ -48649,7 +48649,7 @@
 	    componentWillMount: function componentWillMount() {
 	        var _this = this;
 
-	        _superagent2.default.get('http://localhost:3001/api/bookings').end(function (err, res) {
+	        _superagent2.default.get('//localhost:3001/api/bookings').end(function (err, res) {
 	            if (err || !res.ok) {
 	                alert('Oh no! error' + err);
 	            } else {
@@ -48673,7 +48673,7 @@
 	            //ajax request
 	            $.ajax({
 	                type: "DELETE",
-	                url: 'http://localhost:3001/api/bookings',
+	                url: '//localhost:3001/api/bookings',
 	                data: allBookings[5],
 	                success: function success() {
 	                    console.log('deleted sucessss');

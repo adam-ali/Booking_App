@@ -16,7 +16,7 @@ var viewBookings = React.createClass({
     },
     componentWillMount: function(){
         ajax
-            .get('http://localhost:3001/api/bookings')
+            .get('//localhost:3001/api/bookings')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
