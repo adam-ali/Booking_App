@@ -36,6 +36,7 @@ module.exports = {
                     'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
             },
+            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=90000' },
             {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
@@ -63,7 +64,8 @@ module.exports = {
             {
                 exclude: /node_modules/,
                 test: /.jsx?$/,
-                loader: 'babel-loader'
+                loader: 'babel-loader',
+                include: path.join(__dirname, './public/Images/')
             }
         ]
     },
