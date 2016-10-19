@@ -28,14 +28,7 @@ module.exports = {
                     'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
                 ]
             },
-            { test: /\.jpg$/, loader: './public/images' },
-            {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loaders: [
-                    'file?hash=sha512&digest=hex&name=[hash].[ext]',
-                    'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                ]
-            },
+            { test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/, loader: "file" },
             { test: /\.(png|jpg)$/, loader: 'url-loader?limit=90000' },
             {
                 test: /\.jpg$/,
@@ -65,7 +58,6 @@ module.exports = {
                 exclude: /node_modules/,
                 test: /.jsx?$/,
                 loader: 'babel-loader',
-                include: path.join(__dirname, './public/')
             }
         ]
     },
