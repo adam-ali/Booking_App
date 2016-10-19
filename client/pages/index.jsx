@@ -31,7 +31,7 @@ var Index = React.createClass({
                             </div>
                             <div className="col s6">
                                 <div className="imgWrap">
-                                    <img src="./Images/viewall.jpg" width="610" height="390 "/>
+                                    <img src={require("../../public/Images/viewall.jpg")} width="610" height="390 "/>
                                     <p className="imgDescription">View all bookings</p>
 
                                 </div>
@@ -39,7 +39,7 @@ var Index = React.createClass({
                             </div>
                             <div className="col s6">
                                 <div className="imgWrap">
-                                    <img src="./Images/dlt.jpg" width="610" height="390 "/>
+                                    <img src={require("../../public/Images/dlt.jpg")} width="610" height="390 "/>
                                     <p className="imgDescription">Delete a booking  </p>
                                 </div>
                             </div>

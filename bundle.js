@@ -10013,7 +10013,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'imgWrap' },
-	                                _react2.default.createElement('img', { src: './Images/viewall.jpg', width: '610', height: '390 ' }),
+	                                _react2.default.createElement('img', { src: __webpack_require__(397), width: '610', height: '390 ' }),
 	                                _react2.default.createElement(
 	                                    'p',
 	                                    { className: 'imgDescription' },
@@ -10027,7 +10027,7 @@
 	                            _react2.default.createElement(
 	                                'div',
 	                                { className: 'imgWrap' },
-	                                _react2.default.createElement('img', { src: './Images/dlt.jpg', width: '610', height: '390 ' }),
+	                                _react2.default.createElement('img', { src: __webpack_require__(398), width: '610', height: '390 ' }),
 	                                _react2.default.createElement(
 	                                    'p',
 	                                    { className: 'imgDescription' },
@@ -48759,6 +48759,18 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = __webpack_require__.p + "cd2e40a6c8eb03d020193c7841554762.jpg";
+
+/***/ },
+/* 397 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "ebf5c5ac8ea309930e9c570700ea58c7.jpg";
+
+/***/ },
+/* 398 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__.p + "49be0fbe590970d44e49b36e597a17b8.jpg";
 
 /***/ }
 /******/ ]);
