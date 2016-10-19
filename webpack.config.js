@@ -38,16 +38,16 @@ module.exports = {
             },
             { test: /\.(png|jpg)$/, loader: 'url-loader?limit=90000' },
             {
+                test: /\.jpg$/,
+                loader: "file-loader"
+            },
+            {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
             },
             {
                 test: /\.scss$/,
                 loader: "style-loader!css-loader!sass-loader"
-            },
-            {
-                test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=8192'
             },
             {
                 test: /\.json$/,
@@ -65,7 +65,7 @@ module.exports = {
                 exclude: /node_modules/,
                 test: /.jsx?$/,
                 loader: 'babel-loader',
-                include: path.join(__dirname, './public/Images/')
+                include: path.join(__dirname, './public/')
             }
         ]
     },
