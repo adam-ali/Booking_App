@@ -67,7 +67,7 @@ var Room = React.createClass({
         });
         $('.modal-trigger').leanModal();
         ajax
-            .get('https://localhost:3001/api/floors')
+            .get('http://localhost:3001/api/floors')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
@@ -76,7 +76,7 @@ var Room = React.createClass({
                 }
             });
         ajax
-            .get('https://localhost:3001/api/bookings')
+            .get('http://localhost:3001/api/bookings')
             .end((err, res) => {
                 if (err || !res.ok) {
                     alert('Oh no! error' + err);
